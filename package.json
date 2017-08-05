@@ -1,13 +1,13 @@
 {
   "name": "fastify-accepts-serializer",
-  "version": "0.1.0",
+  "version": "0.0.0",
   "description": "Serializer according to the accept header",
   "main": "index.js",
   "scripts": {
     "lint": "standard | snazzy",
     "unit": "mocha --check-leaks --full-trace --throw-deprecation --allow-uncaught test/*.js",
     "test": "npm run lint && npm run unit",
-    "coverage": "nyc --reporter=lcov --reporter=html npm run unit",
+    "coverage": "nyc --reporter=lcov --reporter=html --check-coverage --lines 100 npm run unit",
     "coveralls": "nyc report --reporter=text-lcov | coveralls"
   },
   "repository": {
