@@ -14,15 +14,20 @@ class Serializer {
 class SerializerManager {
   constructor (configuration) {
     this.serializers = configuration.serializers
+    this.cache = new Map()
   }
 
   findSerializer (types) {
-    // TODO: cache me!
+    if (this.cache.has(types)) return this.cache.get(types)
     for (var i = 0; i < types.length; i++) {
       const type = types[i]
+
       for (var j = 0; j < this.serializers.length; j++) {
         const serializer = this.serializers[j]
-        if (serializer.isAble(type)) return {serializer, type}
+        if (serializer.isAble(type)) {
+          this.cache.set(types, {serializer, type})
+          return {serializer, type}
+        }
       }
     }
     return {}
