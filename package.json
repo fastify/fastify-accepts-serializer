@@ -12,14 +12,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/allevo/fastify-accepts-serializer.git"
+    "url": "git+https://github.com/fastify/fastify-accepts-serializer.git"
   },
   "author": "allevo",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/allevo/fastify-accepts-serializer/issues"
+    "url": "https://github.com/fastify/fastify-accepts-serializer/issues"
   },
-  "homepage": "https://github.com/allevo/fastify-accepts-serializer#readme",
+  "homepage": "https://github.com/fastify/fastify-accepts-serializer#readme",
   "devDependencies": {
     "coveralls": "^2.13.1",
     "fastify": "^0.26.0",
