@@ -141,7 +141,7 @@ describe('serializer - default = undefined', () => {
       assert.deepEqual(response.payload, JSON.stringify({
         statusCode: 406,
         error: 'Not Acceptable',
-        message: 'Allowed: /^application\\/yaml$/'
+        message: 'Allowed: /^application\\/yaml$/,application/json'
       }))
 
       done()
@@ -315,6 +315,55 @@ describe('serializer per route', () => {
     }, response => {
       assert.deepEqual(response.headers['content-type'], 'application/x-msgpack')
       assert.deepEqual(response.payload, 'my-custom-string-msgpack')
+
+      done()
+    })
+  })
+})
+
+describe('serializer without conf', () => {
+  let fastify
+  before('load fastify', () => {
+    fastify = Fastify()
+    fastify.register(plugin)
+
+    fastify.get('/request', function (req, reply) {
+      reply.send({pippo: 'pluto'})
+    })
+  })
+
+  it('application/json -> json', done => {
+    fastify.inject({
+      method: 'GET',
+      url: '/request',
+      payload: {},
+      headers: {
+        accept: 'application/json'
+      }
+    }, response => {
+      assert.deepEqual(response.headers['content-type'], 'application/json')
+      assert.deepEqual(response.payload, JSON.stringify({pippo: 'pluto'}))
+
+      done()
+    })
+  })
+
+  it('application/yaml -> 406', done => {
+    fastify.inject({
+      method: 'GET',
+      url: '/request',
+      payload: {},
+      headers: {
+        accept: 'application/yaml'
+      }
+    }, response => {
+      assert.deepEqual(response.headers['content-type'], 'application/json')
+      assert.deepEqual(response.statusCode, 406)
+      assert.deepEqual(response.payload, JSON.stringify({
+        statusCode: 406,
+        error: 'Not Acceptable',
+        message: 'Allowed: application/json'
+      }))
 
       done()
     })

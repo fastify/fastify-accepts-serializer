@@ -40,8 +40,15 @@ function acceptsSerializerPlugin (fastify, options, next) {
         type = defaultSerializer.type
       }
 
-      if (!serializer && options.default !== FASTIFY_DEFAULT_SERIALIZE_MIME_TYPE) {
-        return reply.code(406).type('application/json').send(Boom.notAcceptable('Allowed: ' + serializerManager.getSupportedTypes().join(',')))
+      if (!serializer &&
+            options.default !== FASTIFY_DEFAULT_SERIALIZE_MIME_TYPE &&
+            !request.type(FASTIFY_DEFAULT_SERIALIZE_MIME_TYPE)) {
+        const supportedTypes = serializerManager.getSupportedTypes()
+          .concat([FASTIFY_DEFAULT_SERIALIZE_MIME_TYPE])
+
+        return reply.code(406)
+          .type(FASTIFY_DEFAULT_SERIALIZE_MIME_TYPE)
+          .send(Boom.notAcceptable('Allowed: ' + supportedTypes.join(',')))
       }
 
       if (serializer) {
