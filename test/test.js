@@ -1,7 +1,7 @@
 'use strict'
+/* eslint-env node, mocha */
 
 const assert = require('assert')
-const {describe, it, before} = require('mocha')
 
 const plugin = require('../')
 
