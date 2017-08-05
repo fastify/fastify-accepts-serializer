@@ -1,0 +1,45 @@
+{
+  "name": "fastify-accepts-serializer",
+  "version": "0.1.0",
+  "description": "Serializer according to the accept header",
+  "main": "index.js",
+  "scripts": {
+    "lint": "standard | snazzy",
+    "unit": "mocha --check-leaks --full-trace --throw-deprecation --allow-uncaught test/*.js",
+    "test": "npm run lint && npm run unit",
+    "coverage": "nyc --reporter=lcov --reporter=html npm run unit",
+    "coveralls": "nyc report --reporter=text-lcov | coveralls"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/allevo/fastify-accepts-serializer.git"
+  },
+  "author": "allevo",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/allevo/fastify-accepts-serializer/issues"
+  },
+  "homepage": "https://github.com/allevo/fastify-accepts-serializer#readme",
+  "devDependencies": {
+    "coveralls": "^2.13.1",
+    "fastify": "^0.26.0",
+    "msgpack5": "^3.5.0",
+    "pre-commit": "^1.2.2",
+    "protobufjs": "^6.8.0",
+    "shot": "^3.4.2",
+    "snazzy": "^7.0.0",
+    "standard": "^10.0.2",
+    "tap": "^10.7.1",
+    "yamljs": "^0.3.0"
+  },
+  "peerDependencies": {
+    "fastify": ">=0.26.0"
+  },
+  "dependencies": {
+    "boom": "^5.2.0",
+    "fastify-accepts": ">=0.2.0",
+    "fastify-plugin": "^0.1.0",
+    "mocha": "^3.5.0",
+    "nyc": "^11.1.0"
+  }
+}
