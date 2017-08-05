@@ -8,18 +8,31 @@ const SerializerManager = require('./SerializerManager')
 const FASTIFY_DEFAULT_SERIALIZE_MIME_TYPE = 'application/json'
 
 function acceptsSerializerPlugin (fastify, options, next) {
-  const serializerManager = SerializerManager.build(options)
+  const globalSerializerManager = SerializerManager.build(options)
 
-  const defaultSerializer = serializerManager.findSerializer([options.default])
+  const defaultSerializer = globalSerializerManager.findSerializer([options.default])
 
   fastify.register(require('fastify-accepts'), err => {
     if (err) return next(err)
 
     fastify.addHook('preHandler', (request, reply, done) => {
       const types = request.types()
+      let serializer
+      let type
+
+      if (!reply.store.config.serializer) {
+        reply.store.config.serializer = {}
+      }
+
+      if (!reply.store.config.serializer.serializerManager) {
+        reply.store.config.serializer.serializerManager = SerializerManager.expand(reply.store.config.serializer, globalSerializerManager)
+      }
+
+      const serializerManager = reply.store.config.serializer.serializerManager
+
       const s = serializerManager.findSerializer(types)
-      let serializer = s.serializer
-      let type = s.type
+      serializer = s.serializer
+      type = s.type
 
       if (!serializer && defaultSerializer) {
         serializer = defaultSerializer.serializer

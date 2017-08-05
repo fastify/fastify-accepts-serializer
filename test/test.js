@@ -253,3 +253,70 @@ describe('serializer - default = application/yaml', () => {
     })
   })
 })
+
+describe('serializer per route', () => {
+  let fastify
+  before('load fastify', () => {
+    fastify = Fastify()
+    fastify.register(plugin, {
+      serializers: [
+        {
+          regex: /^application\/yaml$/,
+          serializer: body => YAML.stringify(body)
+        }
+      ],
+      default: 'application/yaml'
+    })
+
+    const config = {
+      serializer: {
+        serializers: [
+          {
+            regex: /^application\/yaml$/,
+            serializer: body => 'my-custom-string'
+          },
+          {
+            regex: /^application\/x-msgpack$/,
+            serializer: body => 'my-custom-string-msgpack'
+          }
+        ]
+      }
+    }
+
+    fastify.get('/request', { config }, function (req, reply) {
+      reply.send({pippo: 'pluto'})
+    })
+  })
+
+  it('overwrite', done => {
+    fastify.inject({
+      method: 'GET',
+      url: '/request',
+      payload: {},
+      headers: {
+        accept: 'application/yaml'
+      }
+    }, response => {
+      assert.deepEqual(response.headers['content-type'], 'application/yaml')
+      assert.deepEqual(response.payload, 'my-custom-string')
+
+      done()
+    })
+  })
+
+  it('not defined globally', done => {
+    fastify.inject({
+      method: 'GET',
+      url: '/request',
+      payload: {},
+      headers: {
+        accept: 'application/x-msgpack'
+      }
+    }, response => {
+      assert.deepEqual(response.headers['content-type'], 'application/x-msgpack')
+      assert.deepEqual(response.payload, 'my-custom-string-msgpack')
+
+      done()
+    })
+  })
+})

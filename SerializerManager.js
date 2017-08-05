@@ -32,11 +32,20 @@ class SerializerManager {
     return this.serializers.map(s => s.regex)
   }
 }
-SerializerManager.build = function (options) {
-  const serializers = options.serializers.map(c => new Serializer(c))
 
+SerializerManager.build = function (options) {
+  options = options || {}
+  options.serializers = options.serializers || []
+  return SerializerManager.expand(options, {serializers: []})
+}
+
+SerializerManager.expand = function (options, fallbackSerializer) {
+  options = options || {}
+  options.serializers = options.serializers || []
+
+  const serializers = options.serializers.map(c => new Serializer(c))
   return new SerializerManager({
-    serializers: serializers
+    serializers: serializers.concat(fallbackSerializer.serializers)
   })
 }
 
