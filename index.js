@@ -17,7 +17,9 @@ function acceptsSerializerPlugin (fastify, options, next) {
 
     fastify.addHook('preHandler', (request, reply, done) => {
       const types = request.types()
-      let {serializer, type} = serializerManager.findSerializer(types)
+      const s = serializerManager.findSerializer(types)
+      let serializer = s.serializer
+      let type = s.type
 
       if (!serializer && defaultSerializer) {
         serializer = defaultSerializer.serializer
