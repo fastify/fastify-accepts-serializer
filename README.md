@@ -1,6 +1,6 @@
 # fastify-accepts-serializer
-[![Build Status](https://travis-ci.org/allevo/fastify-accepts-serializer.svg?branch=master)](https://travis-ci.org/allevo/fastify-accepts-serializer)
-[![Coverage Status](https://coveralls.io/repos/github/allevo/fastify-accepts-serializer/badge.svg?branch=master)](https://coveralls.io/github/allevo/fastify-accepts-serializer?branch=master)
+[![Build Status](https://travis-ci.org/fastify/fastify-accepts-serializer.svg?branch=master)](https://travis-ci.org/fastify/fastify-accepts-serializer)
+[![Coverage Status](https://coveralls.io/repos/github/fastify/fastify-accepts-serializer/badge.svg?branch=master)](https://coveralls.io/github/fastify/fastify-accepts-serializer?branch=master)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 Serializer according to the `Accept` header
