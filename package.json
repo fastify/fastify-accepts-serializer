@@ -26,7 +26,6 @@
     "msgpack5": "^4.2.1",
     "pre-commit": "^1.2.2",
     "protobufjs": "^6.8.8",
-    "shot": "^4.0.7",
     "snazzy": "^8.0.0",
     "standard": "^12.0.1",
     "tap": "^12.1.0",
@@ -38,7 +37,6 @@
     "fastify": ">=1.13.0"
   },
   "dependencies": {
-    "boom": "^7.2.2",
     "fastify-accepts": ">=0.5.0",
     "fastify-plugin": "^1.2.1"
   }

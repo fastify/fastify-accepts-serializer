@@ -1,8 +1,6 @@
 'use strict'
 
 const fp = require('fastify-plugin')
-const Boom = require('boom')
-
 const SerializerManager = require('./SerializerManager')
 
 const FASTIFY_DEFAULT_SERIALIZE_MIME_TYPE = 'application/json'
@@ -48,7 +46,7 @@ function acceptsSerializerPlugin (fastify, options, next) {
 
         return reply.code(406)
           .type(FASTIFY_DEFAULT_SERIALIZE_MIME_TYPE)
-          .send(Boom.notAcceptable('Allowed: ' + supportedTypes.join(',')))
+          .send('Allowed: ' + supportedTypes.join(','))
       }
 
       if (serializer) {
@@ -64,6 +62,6 @@ function acceptsSerializerPlugin (fastify, options, next) {
 }
 
 module.exports = fp(acceptsSerializerPlugin, {
-  fastify: '<2.0.0',
+  fastify: '>1.0.0 <2.0.0',
   name: 'fastify-accepts-serializer'
 })
