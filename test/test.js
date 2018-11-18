@@ -36,11 +36,12 @@ describe('serializer', () => {
     })
 
     fastify.get('/request', function (req, reply) {
-      reply.send({pippo: 'pluto'})
+      console.log(';asdadasdasd')
+      reply.send({ pippo: 'pluto' })
     })
 
     fastify.get('/request2', function (req, reply) {
-      reply.send({pippo: 'pluto'})
+      reply.send({ pippo: 'pluto' })
     })
   })
 
@@ -53,11 +54,11 @@ describe('serializer', () => {
         accept: 'application/yaml'
       }
     }, response => {
-      assert.deepEqual(response.headers['content-type'], 'application/yaml')
-      assert.deepEqual(response.payload, YAML.stringify({pippo: 'pluto'}))
-
-      done()
+      assert.deepStrictEqual(response.headers['content-type'], 'application/yaml')
+      assert.deepStrictEqual(response.payload, YAML.stringify({ pippo: 'pluto' }))
     })
+
+    done()
   })
 
   it('application/x-protobuf -> protobuf', done => {
@@ -69,11 +70,11 @@ describe('serializer', () => {
         accept: 'application/x-protobuf'
       }
     }, response => {
-      assert.deepEqual(response.headers['content-type'], 'application/x-protobuf')
-      assert.deepEqual(response.payload, AwesomeMessage.encode(AwesomeMessage.create({pippo: 'pluto'})).finish().toString())
-
-      done()
+      assert.deepStrictEqual(response.headers['content-type'], 'application/x-protobuf')
+      assert.deepStrictEqual(response.payload, AwesomeMessage.encode(AwesomeMessage.create({ pippo: 'pluto' })).finish().toString())
     })
+
+    done()
   })
 
   it('application/x-protobuf -> protobuf', done => {
@@ -85,11 +86,11 @@ describe('serializer', () => {
         accept: 'application/x-protobuf'
       }
     }, response => {
-      assert.deepEqual(response.headers['content-type'], 'application/x-protobuf')
-      assert.deepEqual(response.payload, AwesomeMessage.encode(AwesomeMessage.create({pippo: 'pluto'})).finish().toString())
-
-      done()
+      assert.deepStrictEqual(response.headers['content-type'], 'application/x-protobuf')
+      assert.deepStrictEqual(response.payload, AwesomeMessage.encode(AwesomeMessage.create({ pippo: 'pluto' })).finish().toString())
     })
+
+    done()
   })
 
   it('application/x-msgpack -> msgpack', done => {
@@ -101,11 +102,11 @@ describe('serializer', () => {
         accept: 'application/x-msgpack'
       }
     }, response => {
-      assert.deepEqual(response.headers['content-type'], 'application/x-msgpack')
-      assert.deepEqual(response.payload, msgpack.encode({pippo: 'pluto'}).toString())
-
-      done()
+      assert.deepStrictEqual(response.headers['content-type'], 'application/x-msgpack')
+      assert.deepStrictEqual(response.payload, msgpack.encode({ pippo: 'pluto' }).toString())
     })
+
+    done()
   })
 })
 
@@ -123,7 +124,7 @@ describe('serializer - default = undefined', () => {
     })
 
     fastify.get('/request', function (req, reply) {
-      reply.send({pippo: 'pluto'})
+      reply.send({ pippo: 'pluto' })
     })
   })
 
@@ -136,16 +137,16 @@ describe('serializer - default = undefined', () => {
         accept: 'text/html'
       }
     }, response => {
-      assert.deepEqual(response.headers['content-type'], 'application/json')
-      assert.deepEqual(response.statusCode, 406)
-      assert.deepEqual(response.payload, JSON.stringify({
+      assert.deepStrictEqual(response.headers['content-type'], 'application/json')
+      assert.deepStrictEqual(response.statusCode, 406)
+      assert.deepStrictEqual(response.payload, JSON.stringify({
         statusCode: 406,
         error: 'Not Acceptable',
         message: 'Allowed: /^application\\/yaml$/,application/json'
       }))
-
-      done()
     })
+
+    done()
   })
 })
 
@@ -161,7 +162,7 @@ describe('serializer - default = application/json by fastify', () => {
     })
 
     fastify.get('/request', function (req, reply) {
-      reply.send({pippo: 'pluto'})
+      reply.send({ pippo: 'pluto' })
     })
   })
 
@@ -174,11 +175,11 @@ describe('serializer - default = application/json by fastify', () => {
         accept: 'text/html'
       }
     }, response => {
-      assert.deepEqual(response.headers['content-type'], 'application/json')
-      assert.deepEqual(response.payload, JSON.stringify({pippo: 'pluto'}))
-
-      done()
+      assert.deepStrictEqual(response.headers['content-type'], 'application/json')
+      assert.deepStrictEqual(response.payload, JSON.stringify({ pippo: 'pluto' }))
     })
+
+    done()
   })
 })
 
@@ -197,7 +198,7 @@ describe('serializer - default = application/json by custom', () => {
     })
 
     fastify.get('/request', function (req, reply) {
-      reply.send({pippo: 'pluto'})
+      reply.send({ pippo: 'pluto' })
     })
   })
 
@@ -210,11 +211,10 @@ describe('serializer - default = application/json by custom', () => {
         accept: 'text/html'
       }
     }, response => {
-      assert.deepEqual(response.headers['content-type'], 'application/json')
-      assert.deepEqual(response.payload, 'my-custom-string')
-
-      done()
+      assert.deepStrictEqual(response.headers['content-type'], 'application/json')
+      assert.deepStrictEqual(response.payload, 'my-custom-string')
     })
+    done()
   })
 })
 
@@ -233,7 +233,7 @@ describe('serializer - default = application/yaml', () => {
     })
 
     fastify.get('/request', function (req, reply) {
-      reply.send({pippo: 'pluto'})
+      reply.send({ pippo: 'pluto' })
     })
   })
 
@@ -246,11 +246,10 @@ describe('serializer - default = application/yaml', () => {
         accept: 'text/html'
       }
     }, response => {
-      assert.deepEqual(response.headers['content-type'], 'application/yaml')
-      assert.deepEqual(response.payload, YAML.stringify({pippo: 'pluto'}))
-
-      done()
+      assert.deepStrictEqual(response.headers['content-type'], 'application/yaml')
+      assert.deepStrictEqual(response.payload, YAML.stringify({ pippo: 'pluto' }))
     })
+    done()
   })
 })
 
@@ -284,7 +283,7 @@ describe('serializer per route', () => {
     }
 
     fastify.get('/request', { config }, function (req, reply) {
-      reply.send({pippo: 'pluto'})
+      reply.send({ pippo: 'pluto' })
     })
   })
 
@@ -297,11 +296,11 @@ describe('serializer per route', () => {
         accept: 'application/yaml'
       }
     }, response => {
-      assert.deepEqual(response.headers['content-type'], 'application/yaml')
-      assert.deepEqual(response.payload, 'my-custom-string')
-
-      done()
+      assert.deepStrictEqual(response.headers['content-type'], 'application/yaml')
+      assert.deepStrictEqual(response.payload, 'my-custom-string')
     })
+
+    done()
   })
 
   it('not defined globally', done => {
@@ -313,11 +312,10 @@ describe('serializer per route', () => {
         accept: 'application/x-msgpack'
       }
     }, response => {
-      assert.deepEqual(response.headers['content-type'], 'application/x-msgpack')
-      assert.deepEqual(response.payload, 'my-custom-string-msgpack')
-
-      done()
+      assert.deepStrictEqual(response.headers['content-type'], 'application/x-msgpack')
+      assert.deepStrictEqual(response.payload, 'my-custom-string-msgpack')
     })
+    done()
   })
 })
 
@@ -328,7 +326,7 @@ describe('serializer without conf', () => {
     fastify.register(plugin)
 
     fastify.get('/request', function (req, reply) {
-      reply.send({pippo: 'pluto'})
+      reply.send({ pippo: 'pluto' })
     })
   })
 
@@ -341,11 +339,11 @@ describe('serializer without conf', () => {
         accept: 'application/json'
       }
     }, response => {
-      assert.deepEqual(response.headers['content-type'], 'application/json')
-      assert.deepEqual(response.payload, JSON.stringify({pippo: 'pluto'}))
-
-      done()
+      assert.deepStrictEqual(response.headers['content-type'], 'application/json')
+      assert.deepStrictEqual(response.payload, JSON.stringify({ pippo: 'pluto' }))
     })
+
+    done()
   })
 
   it('application/yaml -> 406', done => {
@@ -357,15 +355,14 @@ describe('serializer without conf', () => {
         accept: 'application/yaml'
       }
     }, response => {
-      assert.deepEqual(response.headers['content-type'], 'application/json')
-      assert.deepEqual(response.statusCode, 406)
-      assert.deepEqual(response.payload, JSON.stringify({
+      assert.deepStrictEqual(response.headers['content-type'], 'application/json')
+      assert.deepStrictEqual(response.statusCode, 406)
+      assert.deepStrictEqual(response.payload, JSON.stringify({
         statusCode: 406,
         error: 'Not Acceptable',
         message: 'Allowed: application/json'
       }))
-
-      done()
     })
+    done()
   })
 })

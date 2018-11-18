@@ -27,8 +27,8 @@ class SerializerManager {
       for (var j = 0; j < this.serializers.length; j++) {
         const serializer = this.serializers[j]
         if (serializer.isAble(type)) {
-          this.cache[types] = {serializer, type}
-          return {serializer, type}
+          this.cache[types] = { serializer, type }
+          return { serializer, type }
         }
       }
     }
@@ -43,7 +43,7 @@ class SerializerManager {
 SerializerManager.build = function (options) {
   options = options || {}
   options.serializers = options.serializers || []
-  return SerializerManager.expand(options, {serializers: []})
+  return SerializerManager.expand(options, { serializers: [] })
 }
 
 SerializerManager.expand = function (options, fallbackSerializer) {
