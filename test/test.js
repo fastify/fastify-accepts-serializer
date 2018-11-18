@@ -275,7 +275,7 @@ test('serializer per route', t => {
 
   fastify.get('/request2', function (req, reply) {
     reply
-      .header('Content-Type', 'application/x-msgpack')
+      .type('application/x-msgpack')
       .serializer(_ => 'my-custom-string-msgpack')
       .send({ pippo: 'pluto' })
   })

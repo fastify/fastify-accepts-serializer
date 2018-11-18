@@ -21,9 +21,7 @@ function acceptsSerializerPlugin (fastify, options, next) {
       reply.serializer = {}
     }
 
-    if (!reply.serializer.serializerManager) {
-      reply.serializer.serializerManager = SerializerManager.expand(reply.serializer, globalSerializerManager)
-    }
+    reply.serializer.serializerManager = SerializerManager.expand(reply.serializer, globalSerializerManager)
 
     const serializerManager = reply.serializer.serializerManager
 
@@ -43,12 +41,12 @@ function acceptsSerializerPlugin (fastify, options, next) {
         .concat([FASTIFY_DEFAULT_SERIALIZE_MIME_TYPE])
 
       const notAcceptable = new Error('Allowed: ' + supportedTypes.join(','))
-      return reply.code(406).send(notAcceptable)
+      return reply.type(FASTIFY_DEFAULT_SERIALIZE_MIME_TYPE).code(406).send(notAcceptable)
     }
 
     if (serializer) {
       reply.type(type)
-      reply._serializer = serializer.serializeFunction
+      reply.serializer(serializer.serializeFunction)
     }
 
     done()
