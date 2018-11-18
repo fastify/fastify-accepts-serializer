@@ -6,9 +6,7 @@
   "scripts": {
     "lint": "standard --verbose | snazzy",
     "unit": "tap test/test.js",
-    "test": "npm run lint && npm run unit -- --cov",
-    "coverage": "npm run unit -- --cov --coverage-report=html",
-    "coveralls": "npm run unit -- --cov"
+    "test": "npm run lint && npm run unit -- --cov"
   },
   "repository": {
     "type": "git",
