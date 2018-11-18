@@ -3,7 +3,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/fastify/fastify-accepts-serializer/badge.svg?branch=master)](https://coveralls.io/github/fastify/fastify-accepts-serializer?branch=master)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
-Serializer according to the `Accept` header
+Serializer according to the `Accept` header. Supports Fastify versions < 2.0.0.
 
 ## Install
 ```sh
@@ -61,3 +61,4 @@ For each route, it's defined a SerilizerManager that has a merge of per-route an
 The mime type `application/json` is always handled by `fastify` if no serializer is register for that mime type.
 
 If no `default` key is specified in configuration, all requests with unknown `Accept` header will be replied with an 406 response (a boom error is used)
+
