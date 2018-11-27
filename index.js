@@ -1,8 +1,6 @@
 'use strict'
 
 const fp = require('fastify-plugin')
-const Boom = require('boom')
-
 const SerializerManager = require('./SerializerManager')
 
 const FASTIFY_DEFAULT_SERIALIZE_MIME_TYPE = 'application/json'
@@ -12,55 +10,51 @@ function acceptsSerializerPlugin (fastify, options, next) {
 
   const defaultSerializer = globalSerializerManager.findSerializer([options.default])
 
-  fastify.register(require('fastify-accepts'), err => {
-    /* istanbul ignore next */
-    if (err) return next(err)
+  fastify.register(require('fastify-accepts'))
 
-    fastify.addHook('preHandler', (request, reply, done) => {
-      const types = request.types()
-      let serializer
-      let type
+  fastify.addHook('preHandler', (request, reply, done) => {
+    const types = request.types()
+    let serializer
+    let type
 
-      if (!reply.store.config.serializer) {
-        reply.store.config.serializer = {}
-      }
+    if (!reply.serializer) {
+      reply.serializer = {}
+    }
 
-      if (!reply.store.config.serializer.serializerManager) {
-        reply.store.config.serializer.serializerManager = SerializerManager.expand(reply.store.config.serializer, globalSerializerManager)
-      }
+    reply.serializer.serializerManager = SerializerManager.expand(reply.serializer, globalSerializerManager)
 
-      const serializerManager = reply.store.config.serializer.serializerManager
+    const serializerManager = reply.serializer.serializerManager
 
-      const s = serializerManager.findSerializer(types)
-      serializer = s.serializer
-      type = s.type
+    const s = serializerManager.findSerializer(types)
+    serializer = s.serializer
+    type = s.type
 
-      if (!serializer && defaultSerializer) {
-        serializer = defaultSerializer.serializer
-        type = defaultSerializer.type
-      }
+    if (!serializer && defaultSerializer) {
+      serializer = defaultSerializer.serializer
+      type = defaultSerializer.type
+    }
 
-      if (!serializer &&
+    if (!serializer &&
             options.default !== FASTIFY_DEFAULT_SERIALIZE_MIME_TYPE &&
             !request.type(FASTIFY_DEFAULT_SERIALIZE_MIME_TYPE)) {
-        const supportedTypes = serializerManager.getSupportedTypes()
-          .concat([FASTIFY_DEFAULT_SERIALIZE_MIME_TYPE])
+      const supportedTypes = serializerManager.getSupportedTypes()
+        .concat([FASTIFY_DEFAULT_SERIALIZE_MIME_TYPE])
 
-        return reply.code(406)
-          .type(FASTIFY_DEFAULT_SERIALIZE_MIME_TYPE)
-          .send(Boom.notAcceptable('Allowed: ' + supportedTypes.join(',')))
-      }
+      const notAcceptable = new Error('Allowed: ' + supportedTypes.join(','))
+      return reply.type(FASTIFY_DEFAULT_SERIALIZE_MIME_TYPE).code(406).send(notAcceptable)
+    }
 
-      if (serializer) {
-        reply.type(type)
-        reply._serializer = serializer.serializeFunction
-      }
+    if (serializer) {
+      reply.type(type)
+      reply.serializer(serializer.serializeFunction)
+    }
 
-      done()
-    })
-
-    next()
+    done()
   })
+  next()
 }
 
-module.exports = fp(acceptsSerializerPlugin)
+module.exports = fp(acceptsSerializerPlugin, {
+  fastify: '^1.0.0',
+  name: 'fastify-accepts-serializer'
+})
