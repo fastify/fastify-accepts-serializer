@@ -19,7 +19,7 @@
   },
   "homepage": "https://github.com/fastify/fastify-accepts-serializer#readme",
   "devDependencies": {
-    "fastify": "2.0.0-rc.0",
+    "fastify": "^1.10.0",
     "msgpack5": "^4.2.1",
     "pre-commit": "^1.2.2",
     "protobufjs": "^6.8.8",
