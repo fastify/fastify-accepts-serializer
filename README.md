@@ -2,7 +2,9 @@
 [![Greenkeeper badge](https://badges.greenkeeper.io/fastify/fastify-accepts-serializer.svg)](https://greenkeeper.io/) [![Build Status](https://travis-ci.org/fastify/fastify-accepts-serializer.svg?branch=master)](https://travis-ci.org/fastify/fastify-accepts-serializer) [![Coverage Status](https://coveralls.io/repos/github/fastify/fastify-accepts-serializer/badge.svg?branch=master)](https://coveralls.io/github/fastify/fastify-accepts-serializer?branch=master)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
-Serializer according to the `Accept` header. Supports Fastify versions `^1.10.0`
+Serializer according to the `Accept` header. Supports Fastify versions `>=2.0.0`
+
+Please refer to [this branch](https://github.com/fastify/fastify-accepts-serializer/tree/1.x) and related versions for Fastify ^1.10.0 compatibility.
 
 ## Install
 ```sh
