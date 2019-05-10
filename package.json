@@ -31,5 +31,10 @@
   "dependencies": {
     "fastify-accepts": ">=0.5.0",
     "fastify-plugin": "^1.2.1"
+  },
+  "greenkeeper": {
+    "ignore": [
+      "tap"
+    ]
   }
 }
