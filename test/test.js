@@ -154,7 +154,7 @@ test('serializer - default = application/json by fastify', t => {
   const fastify = Fastify()
 
   fastify.register(plugin, {
-    serializers: [ ],
+    serializers: [],
     default: 'application/json'
   })
 
