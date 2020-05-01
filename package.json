@@ -6,7 +6,7 @@
   "scripts": {
     "lint": "standard --verbose | snazzy",
     "unit": "tap test/test.js",
-    "test": "npm run lint && tap --cov test/test.js"
+    "test": "npm run lint && tap test/test.js"
   },
   "repository": {
     "type": "git",
@@ -29,7 +29,7 @@
     "yamljs": "^0.3.0"
   },
   "dependencies": {
-    "fastify-accepts": "github:frikille/fastify-accepts#v3-upgrade",
+    "fastify-accepts": "^2.0.0",
     "fastify-plugin": "^2.0.0"
   }
 }

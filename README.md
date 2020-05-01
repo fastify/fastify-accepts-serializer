@@ -1,9 +1,11 @@
 # fastify-accepts-serializer
-![CI workflow](https://github.com/fastify/fastify-accepts-serializer/workflows/CI%20workflow/badge.svg) [![Coverage Status](https://coveralls.io/repos/github/fastify/fastify-accepts-serializer/badge.svg?branch=master)](https://coveralls.io/github/fastify/fastify-accepts-serializer?branch=master)
+
+![CI workflow](https://github.com/fastify/fastify-accepts-serializer/workflows/CI%20workflow/badge.svg)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
-Serializer according to the `Accept` header. Supports Fastify versions `>=2.0.0`
+Serializer according to the `Accept` header. Supports Fastify versions `^3.0.0`
 
+Please refer to [this branch](https://github.com/fastify/fastify-accepts-serializer/tree/v2.x) and related versions for Fastify ^2.0.0 compatibility.
 Please refer to [this branch](https://github.com/fastify/fastify-accepts-serializer/tree/1.x) and related versions for Fastify ^1.10.0 compatibility.
 
 ## Install
