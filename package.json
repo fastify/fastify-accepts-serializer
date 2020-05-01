@@ -19,7 +19,7 @@
   },
   "homepage": "https://github.com/fastify/fastify-accepts-serializer#readme",
   "devDependencies": {
-    "fastify": "^2.0.0",
+    "fastify": "^3.0.0-rc.1",
     "msgpack5": "^4.2.1",
     "pre-commit": "^1.2.2",
     "protobufjs": "^6.8.8",
@@ -29,8 +29,8 @@
     "yamljs": "^0.3.0"
   },
   "dependencies": {
-    "fastify-accepts": ">=0.5.0",
-    "fastify-plugin": "^1.2.1"
+    "fastify-accepts": "github:frikille/fastify-accepts#v3-upgrade",
+    "fastify-plugin": "^2.0.0"
   },
   "greenkeeper": {
     "ignore": [
