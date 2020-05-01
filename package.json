@@ -31,10 +31,5 @@
   "dependencies": {
     "fastify-accepts": "github:frikille/fastify-accepts#v3-upgrade",
     "fastify-plugin": "^2.0.0"
-  },
-  "greenkeeper": {
-    "ignore": [
-      "tap"
-    ]
   }
 }
