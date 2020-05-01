@@ -1,5 +1,5 @@
 # fastify-accepts-serializer
-[![Greenkeeper badge](https://badges.greenkeeper.io/fastify/fastify-accepts-serializer.svg)](https://greenkeeper.io/) [![Build Status](https://travis-ci.org/fastify/fastify-accepts-serializer.svg?branch=master)](https://travis-ci.org/fastify/fastify-accepts-serializer) [![Coverage Status](https://coveralls.io/repos/github/fastify/fastify-accepts-serializer/badge.svg?branch=master)](https://coveralls.io/github/fastify/fastify-accepts-serializer?branch=master)
+![CI workflow](https://github.com/fastify/fastify-accepts-serializer/workflows/CI%20workflow/badge.svg) [![Coverage Status](https://coveralls.io/repos/github/fastify/fastify-accepts-serializer/badge.svg?branch=master)](https://coveralls.io/github/fastify/fastify-accepts-serializer?branch=master)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 Serializer according to the `Accept` header. Supports Fastify versions `>=2.0.0`
