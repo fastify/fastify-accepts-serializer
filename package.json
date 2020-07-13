@@ -29,7 +29,7 @@
     "yamljs": "^0.3.0"
   },
   "dependencies": {
-    "fastify-accepts": ">=0.5.0",
+    "fastify-accepts": "^0.5.0 || ^1.0.0",
     "fastify-plugin": "^1.2.1"
   }
 }
