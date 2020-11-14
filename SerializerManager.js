@@ -21,10 +21,10 @@ class SerializerManager {
     const cacheValue = this.cache[types]
     if (cacheValue) return cacheValue
 
-    for (var i = 0; i < types.length; i++) {
+    for (let i = 0; i < types.length; i++) {
       const type = types[i]
 
-      for (var j = 0; j < this.serializers.length; j++) {
+      for (let j = 0; j < this.serializers.length; j++) {
         const serializer = this.serializers[j]
         if (serializer.isAble(type)) {
           this.cache[types] = { serializer, type }
