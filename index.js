@@ -17,10 +17,6 @@ function acceptsSerializerPlugin (fastify, options, next) {
     let serializer
     let type
 
-    if (!reply.serializer) {
-      reply.serializer = {}
-    }
-
     reply.serializer.serializerManager = SerializerManager.expand(reply.serializer, globalSerializerManager)
 
     const serializerManager = reply.serializer.serializerManager
