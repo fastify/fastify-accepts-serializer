@@ -6,6 +6,9 @@ const SerializerManager = require('./SerializerManager')
 const FASTIFY_DEFAULT_SERIALIZE_MIME_TYPE = 'application/json'
 
 function acceptsSerializerPlugin (fastify, options, next) {
+  const serializerCache = {}
+  options.cache = serializerCache
+
   const globalSerializerManager = SerializerManager.build(options)
 
   const defaultSerializer = globalSerializerManager.findSerializer([options.default])
@@ -17,6 +20,7 @@ function acceptsSerializerPlugin (fastify, options, next) {
     let serializer
     let type
 
+    reply.serializer.cache = serializerCache
     reply.serializer.serializerManager = SerializerManager.expand(reply.serializer, globalSerializerManager)
 
     const serializerManager = reply.serializer.serializerManager
