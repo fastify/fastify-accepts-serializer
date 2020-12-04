@@ -365,3 +365,54 @@ test('serializer without conf', t => {
     })
   })
 })
+
+test('serializer cache', t => {
+  t.plan(1)
+
+  const fastify = Fastify()
+
+  fastify.register(plugin, {
+    serializers: [
+      {
+        regex: /^application\/cache$/,
+        serializer: (body) => body
+      }
+    ]
+  })
+
+  t.test('it shoud populate cache', t => {
+    t.plan(8)
+
+    fastify.get('/request', function (req, reply) {
+      t.strictDeepEqual(Object.keys(reply.serializer.cache), ['application/cache'])
+
+      reply.send('cache')
+    })
+
+    fastify.inject({
+      method: 'GET',
+      url: '/request',
+      payload: {},
+      headers: {
+        accept: 'application/cache'
+      }
+    }, (err, res) => {
+      t.error(err)
+      t.strictDeepEqual(res.headers['content-type'], 'application/cache')
+      t.strictDeepEqual(res.payload, 'cache')
+    })
+
+    fastify.inject({
+      method: 'GET',
+      url: '/request',
+      payload: {},
+      headers: {
+        accept: 'application/cache'
+      }
+    }, (err, res) => {
+      t.error(err)
+      t.strictDeepEqual(res.headers['content-type'], 'application/cache')
+      t.strictDeepEqual(res.payload, 'cache')
+    })
+  })
+})
