@@ -14,15 +14,21 @@ class Serializer {
 class SerializerManager {
   constructor (configuration) {
     this.serializers = configuration.serializers
+    this.cache = configuration.cache
   }
 
   findSerializer (types) {
+    const cacheValue = this.cache[types]
+
+    if (cacheValue) return cacheValue
+
     for (let i = 0; i < types.length; i++) {
       const type = types[i]
 
       for (let j = 0; j < this.serializers.length; j++) {
         const serializer = this.serializers[j]
         if (serializer.isAble(type)) {
+          this.cache[types] = { serializer, type }
           return { serializer, type }
         }
       }
@@ -45,7 +51,8 @@ SerializerManager.expand = function (options, fallbackSerializer) {
 
   const serializers = options.serializers.map(c => new Serializer(c))
   return new SerializerManager({
-    serializers: serializers.concat(fallbackSerializer.serializers)
+    serializers: serializers.concat(fallbackSerializer.serializers),
+    cache: options.cache
   })
 }
 
