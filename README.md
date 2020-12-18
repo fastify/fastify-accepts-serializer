@@ -42,17 +42,17 @@ fastify.register(require('fastify-accepts-serializer'), {
 
 // Per-router serializers
 const config = {
-  type: 'application/x-protobug',
-  serializer: body => AwesomeMessage.encode(AwesomeMessage.create(body)).finish()
+  serializers: [
+    {
+      regex: /^application\/x-protobuf$/,
+      serializer: body => AwesomeMessage.encode(AwesomeMessage.create(body)).finish()
+    }
+  ]
 }
 
-fastify.get('/request', function (req, reply) {
-  reply
-    .type(config.type)
-    .serializer(config.serializer)
-    .send({pippo: 'pluto'})
+fastify.get('/request', { config }, function (req, reply) {
+  reply.send({pippo: 'pluto'})
 })
-```
 
 ## Behaviour
 

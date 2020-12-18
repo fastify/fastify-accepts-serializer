@@ -315,6 +315,95 @@ test('serializer per route', t => {
   })
 })
 
+test('serializer per route through route option', t => {
+  t.plan(3)
+
+  const fastify = Fastify()
+
+  fastify.register(plugin, {
+    serializers: [
+      {
+        regex: /^application\/yaml$/,
+        serializer: body => YAML.stringify(body)
+      }
+    ],
+    default: 'application/yaml'
+  })
+
+  const config = {
+    serializers: [
+      {
+        regex: /^application\/x-protobuf$/,
+        serializer: body => AwesomeMessage.encode(AwesomeMessage.create(body)).finish()
+      }
+    ]
+  }
+
+  fastify.get('/request', { config }, function (req, reply) {
+    reply.send({ pippo: 'pluto' })
+  })
+
+  fastify.get('/request2', function (req, reply) {
+    reply.send('my-custom-string')
+  })
+
+  fastify.get('/request3', function (req, reply) {
+    reply
+      .serializer(_ => 'foo-bar-baz')
+      .send({ pippo: 'pluto' })
+  })
+
+  t.test('application/x-protobuf -> protobuf', t => {
+    t.plan(3)
+    fastify.inject({
+      method: 'GET',
+      url: '/request',
+      payload: {},
+      headers: {
+        accept: 'application/x-protobuf'
+      }
+    }, (err, res) => {
+      t.error(err)
+      t.strictDeepEqual(res.headers['content-type'], 'application/x-protobuf')
+      t.strictDeepEqual(res.payload, AwesomeMessage.encode(AwesomeMessage.create({ pippo: 'pluto' })).finish().toString())
+    })
+  })
+
+  t.test('route level should not pullute global cache', t => {
+    t.plan(3)
+
+    fastify.inject({
+      method: 'GET',
+      url: '/request2',
+      payload: {},
+      headers: {
+        accept: 'application/yaml'
+      }
+    }, (err, res) => {
+      t.error(err)
+      t.strictDeepEqual(res.headers['content-type'], 'application/yaml')
+      t.strictDeepEqual(res.payload, 'my-custom-string')
+    })
+  })
+
+  t.test('overwrite by fastify reply', t => {
+    t.plan(3)
+
+    fastify.inject({
+      method: 'GET',
+      url: '/request3',
+      payload: {},
+      headers: {
+        accept: 'application/yaml'
+      }
+    }, (err, res) => {
+      t.error(err)
+      t.strictDeepEqual(res.headers['content-type'], 'application/yaml')
+      t.strictDeepEqual(res.payload, 'foo-bar-baz')
+    })
+  })
+})
+
 test('serializer without conf', t => {
   t.plan(2)
 
