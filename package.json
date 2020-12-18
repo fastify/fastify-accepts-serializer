@@ -1,6 +1,6 @@
 {
   "name": "fastify-accepts-serializer",
-  "version": "3.1.0",
+  "version": "3.2.0",
   "description": "Serializer according to the accept header",
   "main": "index.js",
   "scripts": {
@@ -21,9 +21,9 @@
   "homepage": "https://github.com/fastify/fastify-accepts-serializer#readme",
   "devDependencies": {
     "fastify": "^3.0.0",
-    "msgpack5": "^4.2.1",
+    "msgpack5": "^4.3.0",
     "pre-commit": "^1.2.2",
-    "protobufjs": "^6.8.8",
+    "protobufjs": "^6.10.2",
     "snazzy": "^9.0.0",
     "standard": "^16.0.2",
     "tap": "^14.10.7",
