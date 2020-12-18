@@ -22,10 +22,10 @@ function acceptsSerializerPlugin (fastify, options, next) {
 
     if (reply.context.config.serializers) {
       // keep route level cache in config to prevent messing with global cache
-      reply.context.config.cache = Object.assign({}, reply.context.config.cache)
+      reply.context.config.serializers.cache = Object.assign({}, reply.context.config.serializers.cache)
       reply.serializer.serializerManager = SerializerManager.expand({
         serializers: reply.context.config.serializers,
-        cache: reply.context.config.cache
+        cache: reply.context.config.serializers.cache
       }, globalSerializerManager)
     } else {
       // use global serializer
