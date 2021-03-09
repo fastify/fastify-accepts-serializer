@@ -1,6 +1,6 @@
 # fastify-accepts-serializer
 
-![CI workflow](https://github.com/fastify/fastify-accepts-serializer/workflows/CI%20workflow/badge.svg)
+![CI](https://github.com/fastify/fastify-accepts-serializer/workflows/CI/badge.svg)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 Serializer according to the `Accept` header. Supports Fastify versions `^3.0.0`
