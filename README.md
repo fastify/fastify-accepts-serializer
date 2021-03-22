@@ -55,6 +55,7 @@ const config = {
 fastify.get('/request', { config }, function (req, reply) {
   reply.send({pippo: 'pluto'})
 })
+```
 
 ## Behaviour
 
