@@ -1,7 +1,9 @@
 # fastify-accepts-serializer
 
 ![CI](https://github.com/fastify/fastify-accepts-serializer/workflows/CI/badge.svg)
-[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![npm version](https://img.shields.io/npm/v/fastify-accepts-serializer)](https://www.npmjs.com/package/fastify-accepts-serializer)
+[![Known Vulnerabilities](https://snyk.io/test/github/fastify/fastify-accepts-serializer/badge.svg)](https://snyk.io/test/github/fastify/fastify-accepts-serializer)
+[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://standardjs.com/)
 
 Serializer according to the `Accept` header. Supports Fastify versions `^3.0.0`
 
