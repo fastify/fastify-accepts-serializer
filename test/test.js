@@ -52,8 +52,8 @@ test('serializer', t => {
       }
     }, (err, res) => {
       t.error(err)
-      t.strictDeepEqual(res.headers['content-type'], 'application/yaml')
-      t.strictDeepEqual(res.payload, YAML.stringify({ pippo: 'pluto' }))
+      t.strictSame(res.headers['content-type'], 'application/yaml')
+      t.strictSame(res.payload, YAML.stringify({ pippo: 'pluto' }))
     })
   })
 
@@ -68,8 +68,8 @@ test('serializer', t => {
       }
     }, (err, res) => {
       t.error(err)
-      t.strictDeepEqual(res.headers['content-type'], 'application/x-protobuf')
-      t.strictDeepEqual(res.payload, AwesomeMessage.encode(AwesomeMessage.create({ pippo: 'pluto' })).finish().toString())
+      t.strictSame(res.headers['content-type'], 'application/x-protobuf')
+      t.strictSame(res.payload, AwesomeMessage.encode(AwesomeMessage.create({ pippo: 'pluto' })).finish().toString())
     })
   })
 
@@ -85,8 +85,8 @@ test('serializer', t => {
       }
     }, (err, res) => {
       t.error(err)
-      t.strictDeepEqual(res.headers['content-type'], 'application/x-protobuf')
-      t.strictDeepEqual(res.payload, AwesomeMessage.encode(AwesomeMessage.create({ pippo: 'pluto' })).finish().toString())
+      t.strictSame(res.headers['content-type'], 'application/x-protobuf')
+      t.strictSame(res.payload, AwesomeMessage.encode(AwesomeMessage.create({ pippo: 'pluto' })).finish().toString())
     })
   })
 
@@ -102,8 +102,8 @@ test('serializer', t => {
       }
     }, (err, res) => {
       t.error(err)
-      t.strictDeepEqual(res.headers['content-type'], 'application/x-msgpack')
-      t.strictDeepEqual(res.payload, msgpack.encode({ pippo: 'pluto' }).toString())
+      t.strictSame(res.headers['content-type'], 'application/x-msgpack')
+      t.strictSame(res.payload, msgpack.encode({ pippo: 'pluto' }).toString())
     })
   })
 })
@@ -138,9 +138,9 @@ test('serializer - default = undefined', t => {
       }
     }, (err, res) => {
       t.error(err)
-      t.strictDeepEqual(res.headers['content-type'], 'application/json; charset=utf-8')
-      t.strictDeepEqual(res.statusCode, 406)
-      t.strictDeepEqual(res.payload, JSON.stringify({
+      t.strictSame(res.headers['content-type'], 'application/json; charset=utf-8')
+      t.strictSame(res.statusCode, 406)
+      t.strictSame(res.payload, JSON.stringify({
         statusCode: 406,
         error: 'Not Acceptable',
         message: 'Allowed: /^application\\/yaml$/,application/json'
@@ -174,8 +174,8 @@ test('serializer - default = application/json by fastify', t => {
       }
     }, (err, res) => {
       t.error(err)
-      t.strictDeepEqual(res.headers['content-type'], 'application/json; charset=utf-8')
-      t.strictDeepEqual(res.payload, JSON.stringify({ pippo: 'pluto' }))
+      t.strictSame(res.headers['content-type'], 'application/json; charset=utf-8')
+      t.strictSame(res.payload, JSON.stringify({ pippo: 'pluto' }))
     })
   })
 })
@@ -210,8 +210,8 @@ test('serializer - default = application/json by custom', t => {
       }
     }, (err, res) => {
       t.error(err)
-      t.strictDeepEqual(res.headers['content-type'], 'application/json')
-      t.strictDeepEqual(res.payload, 'my-custom-string')
+      t.strictSame(res.headers['content-type'], 'application/json')
+      t.strictSame(res.payload, 'my-custom-string')
     })
   })
 })
@@ -246,8 +246,8 @@ test('serializer - default = application/yaml', t => {
       }
     }, (err, res) => {
       t.error(err)
-      t.strictDeepEqual(res.headers['content-type'], 'application/yaml')
-      t.strictDeepEqual(res.payload, YAML.stringify({ pippo: 'pluto' }))
+      t.strictSame(res.headers['content-type'], 'application/yaml')
+      t.strictSame(res.payload, YAML.stringify({ pippo: 'pluto' }))
     })
   })
 })
@@ -292,8 +292,8 @@ test('serializer per route', t => {
       }
     }, (err, res) => {
       t.error(err)
-      t.strictDeepEqual(res.headers['content-type'], 'application/yaml')
-      t.strictDeepEqual(res.payload, 'my-custom-string')
+      t.strictSame(res.headers['content-type'], 'application/yaml')
+      t.strictSame(res.payload, 'my-custom-string')
     })
   })
 
@@ -309,8 +309,8 @@ test('serializer per route', t => {
       }
     }, (err, res) => {
       t.error(err)
-      t.strictDeepEqual(res.headers['content-type'], 'application/x-msgpack')
-      t.strictDeepEqual(res.payload, 'my-custom-string-msgpack')
+      t.strictSame(res.headers['content-type'], 'application/x-msgpack')
+      t.strictSame(res.payload, 'my-custom-string-msgpack')
     })
   })
 })
@@ -364,8 +364,8 @@ test('serializer per route through route option', t => {
       }
     }, (err, res) => {
       t.error(err)
-      t.strictDeepEqual(res.headers['content-type'], 'application/x-protobuf')
-      t.strictDeepEqual(res.payload, AwesomeMessage.encode(AwesomeMessage.create({ pippo: 'pluto' })).finish().toString())
+      t.strictSame(res.headers['content-type'], 'application/x-protobuf')
+      t.strictSame(res.payload, AwesomeMessage.encode(AwesomeMessage.create({ pippo: 'pluto' })).finish().toString())
     })
   })
 
@@ -381,8 +381,8 @@ test('serializer per route through route option', t => {
       }
     }, (err, res) => {
       t.error(err)
-      t.strictDeepEqual(res.headers['content-type'], 'application/yaml')
-      t.strictDeepEqual(res.payload, 'my-custom-string')
+      t.strictSame(res.headers['content-type'], 'application/yaml')
+      t.strictSame(res.payload, 'my-custom-string')
     })
   })
 
@@ -398,8 +398,8 @@ test('serializer per route through route option', t => {
       }
     }, (err, res) => {
       t.error(err)
-      t.strictDeepEqual(res.headers['content-type'], 'application/yaml')
-      t.strictDeepEqual(res.payload, 'foo-bar-baz')
+      t.strictSame(res.headers['content-type'], 'application/yaml')
+      t.strictSame(res.payload, 'foo-bar-baz')
     })
   })
 })
@@ -427,8 +427,8 @@ test('serializer without conf', t => {
       }
     }, (err, res) => {
       t.error(err)
-      t.strictDeepEqual(res.headers['content-type'], 'application/json; charset=utf-8')
-      t.strictDeepEqual(res.payload, JSON.stringify({ pippo: 'pluto' }))
+      t.strictSame(res.headers['content-type'], 'application/json; charset=utf-8')
+      t.strictSame(res.payload, JSON.stringify({ pippo: 'pluto' }))
     })
   })
 
@@ -444,9 +444,9 @@ test('serializer without conf', t => {
       }
     }, (err, res) => {
       t.error(err)
-      t.strictDeepEqual(res.headers['content-type'], 'application/json; charset=utf-8')
-      t.strictDeepEqual(res.statusCode, 406)
-      t.strictDeepEqual(res.payload, JSON.stringify({
+      t.strictSame(res.headers['content-type'], 'application/json; charset=utf-8')
+      t.strictSame(res.statusCode, 406)
+      t.strictSame(res.payload, JSON.stringify({
         statusCode: 406,
         error: 'Not Acceptable',
         message: 'Allowed: application/json'
@@ -473,7 +473,7 @@ test('serializer cache', t => {
     t.plan(8)
 
     fastify.get('/request', function (req, reply) {
-      t.strictDeepEqual(Object.keys(reply.serializer.cache), ['application/cache'])
+      t.strictSame(Object.keys(reply.serializer.cache), ['application/cache'])
 
       reply.send('cache')
     })
@@ -487,8 +487,8 @@ test('serializer cache', t => {
       }
     }, (err, res) => {
       t.error(err)
-      t.strictDeepEqual(res.headers['content-type'], 'application/cache')
-      t.strictDeepEqual(res.payload, 'cache')
+      t.strictSame(res.headers['content-type'], 'application/cache')
+      t.strictSame(res.payload, 'cache')
     })
 
     fastify.inject({
@@ -500,8 +500,8 @@ test('serializer cache', t => {
       }
     }, (err, res) => {
       t.error(err)
-      t.strictDeepEqual(res.headers['content-type'], 'application/cache')
-      t.strictDeepEqual(res.payload, 'cache')
+      t.strictSame(res.headers['content-type'], 'application/cache')
+      t.strictSame(res.payload, 'cache')
     })
   })
 })
