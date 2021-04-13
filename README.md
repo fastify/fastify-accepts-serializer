@@ -63,4 +63,4 @@ For each route, a SerilizerManager is defined, which has both per-route and glob
 
 The MIME type `application/json` is always handled by `fastify` if no serializer is registered for that MIME type.
 
-If no `default` key is specified in configuration, all requests with an unknown `Accept` header will be replied with an 406 response (a boom error is used)
+If no `default` key is specified in configuration, all requests with an unknown `Accept` header will be replied to with a 406 response (a boom error is used).
