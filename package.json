@@ -22,7 +22,7 @@
   "homepage": "https://github.com/fastify/fastify-accepts-serializer#readme",
   "devDependencies": {
     "fastify": "^3.0.0",
-    "msgpack5": "^5.0.0",
+    "msgpack5": "^6.0.0",
     "pre-commit": "^1.2.2",
     "protobufjs": "^6.10.2",
     "snazzy": "^9.0.0",
