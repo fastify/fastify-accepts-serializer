@@ -1,7 +1,7 @@
-# fastify-accepts-serializer
+# @fastify/accepts-serializer
 
 ![CI](https://github.com/fastify/fastify-accepts-serializer/workflows/CI/badge.svg)
-[![npm version](https://img.shields.io/npm/v/fastify-accepts-serializer)](https://www.npmjs.com/package/fastify-accepts-serializer)
+[![npm version](https://img.shields.io/npm/v/@fastify/accepts-serializer)](https://www.npmjs.com/package/@fastify/accepts-serializer)
 [![Known Vulnerabilities](https://snyk.io/test/github/fastify/fastify-accepts-serializer/badge.svg)](https://snyk.io/test/github/fastify/fastify-accepts-serializer)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://standardjs.com/)
 
@@ -12,7 +12,7 @@ Please refer to [this branch](https://github.com/fastify/fastify-accepts-seriali
 
 ## Install
 ```sh
-npm i --save fastify-accepts-serializer
+npm i --save @fastify/accepts-serializer
 ```
 
 ## Usage
@@ -28,7 +28,7 @@ const AwesomeMessage = root.lookupType('awesomepackage.AwesomeMessage')
 let fastify = require('fastify')()
 
 // Global serializers
-fastify.register(require('fastify-accepts-serializer'), {
+fastify.register(require('@fastify/accepts-serializer'), {
   serializers: [
     {
       regex: /^application\/yaml$/,
