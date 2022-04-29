@@ -31,7 +31,7 @@
     "yamljs": "^0.3.0"
   },
   "dependencies": {
-    "fastify-accepts": "^2.0.0",
+    "@fastify/accepts": "^3.0.0",
     "fastify-plugin": "^3.0.0"
   },
   "publishConfig": {

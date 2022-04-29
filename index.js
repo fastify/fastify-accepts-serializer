@@ -13,7 +13,7 @@ function acceptsSerializerPlugin (fastify, options, next) {
 
   const defaultSerializer = globalSerializerManager.findSerializer([options.default])
 
-  fastify.register(require('fastify-accepts'))
+  fastify.register(require('@fastify/accepts'))
 
   fastify.addHook('preHandler', (request, reply, done) => {
     const types = request.types()
