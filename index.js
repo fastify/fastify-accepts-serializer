@@ -65,6 +65,6 @@ function acceptsSerializerPlugin (fastify, options, next) {
 }
 
 module.exports = fp(acceptsSerializerPlugin, {
-  fastify: '>=3.x',
-  name: 'fastify-accepts-serializer'
+  fastify: '4.x',
+  name: '@fastify/accepts-serializer'
 })
