@@ -24,7 +24,7 @@
     "@fastify/pre-commit": "^2.0.2",
     "fastify": "^4.0.0-rc.2",
     "msgpack5": "^6.0.0",
-    "protobufjs": "^6.10.2",
+    "protobufjs": "^7.0.0",
     "snazzy": "^9.0.0",
     "standard": "^17.0.0",
     "tap": "^16.0.0",
