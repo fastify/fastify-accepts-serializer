@@ -11,7 +11,7 @@ Please refer to [this branch](https://github.com/fastify/fastify-accepts-seriali
 
 ## Install
 ```sh
-npm i --save @fastify/accepts-serializer
+npm i @fastify/accepts-serializer
 ```
 
 ## Usage
