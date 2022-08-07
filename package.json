@@ -3,10 +3,12 @@
   "version": "4.0.1",
   "description": "Serializer according to the accept header",
   "main": "index.js",
+  "types": "types/index.d.ts",
   "scripts": {
     "lint": "standard --verbose | snazzy",
-    "test": "npm run test:unit",
-    "test:unit": "tap"
+    "test": "npm run test:unit && npm run test:typescript",
+    "test:unit": "tap",
+    "test:typescript": "tsd"
   },
   "pre-commit": [
     "lint",
@@ -30,6 +32,7 @@
     "snazzy": "^9.0.0",
     "standard": "^17.0.0",
     "tap": "^16.0.0",
+    "tsd": "^0.22.0",
     "yamljs": "^0.3.0"
   },
   "dependencies": {
