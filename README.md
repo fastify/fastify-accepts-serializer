@@ -58,7 +58,7 @@ fastify.get('/request', { config }, function (req, reply) {
 
 ## Behaviour
 
-For each route, a SerilizerManager is defined, which has both per-route and global serializer definitions.
+For each route, a SerializerManager is defined, which has both per-route and global serializer definitions.
 
 The MIME type `application/json` is always handled by `fastify` if no serializer is registered for that MIME type.
 
