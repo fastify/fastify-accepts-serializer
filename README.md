@@ -4,10 +4,8 @@
 [![npm version](https://img.shields.io/npm/v/@fastify/accepts-serializer)](https://www.npmjs.com/package/@fastify/accepts-serializer)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://standardjs.com/)
 
-Serialize according to the `Accept` header. Supports Fastify versions `^3.0.0`
+Serialize according to the `Accept` header. Supports Fastify versions `^4.0.0`
 
-Please refer to [this branch](https://github.com/fastify/fastify-accepts-serializer/tree/v2.x) and related versions for Fastify ^2.0.0 compatibility.
-Please refer to [this branch](https://github.com/fastify/fastify-accepts-serializer/tree/1.x) and related versions for Fastify ^1.10.0 compatibility.
 
 ## Install
 ```sh
