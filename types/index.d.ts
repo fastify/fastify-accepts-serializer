@@ -2,20 +2,26 @@ import { FastifyPluginCallback } from 'fastify';
 
 declare module 'fastify' {
   export interface FastifyContextConfig {
-    serializers: SerializerConfig[];
+    serializers: fastifyAcceptsSerializer.SerializerConfig[];
   }
 }
 
-interface SerializerConfig {
-  regex: RegExp;
-  serializer: (body: any) => string;
+type FastifyAcceptsSerializer = FastifyPluginCallback<fastifyAcceptsSerializer.FastifyAcceptsSerializerPluginOptions>;
+
+declare namespace fastifyAcceptsSerializer {
+  export interface SerializerConfig {
+    regex: RegExp;
+    serializer: (body: any) => string;
+  }
+  
+  export interface FastifyAcceptsSerializerPluginOptions {
+    serializers: SerializerConfig[];
+    default: string;
+  }
+
+  export const fastifyAcceptsSerializer: FastifyAcceptsSerializer
+  export { fastifyAcceptsSerializer as default }
 }
 
-interface FastifyAcceptsSerializerPluginOptions {
-  serializers: SerializerConfig[];
-  default: string;
-}
-
-declare const fastifyAcceptsSerializer: FastifyPluginCallback<FastifyAcceptsSerializerPluginOptions>;
-
-export default fastifyAcceptsSerializer;
+declare function fastifyAcceptsSerializer(...params: Parameters<FastifyAcceptsSerializer>): ReturnType<FastifyAcceptsSerializer>
+export = fastifyAcceptsSerializer

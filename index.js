@@ -5,7 +5,7 @@ const SerializerManager = require('./SerializerManager')
 
 const FASTIFY_DEFAULT_SERIALIZE_MIME_TYPE = 'application/json'
 
-function acceptsSerializerPlugin (fastify, options, next) {
+function fastifyAcceptsSerializer (fastify, options, next) {
   const serializerCache = {}
   options.cache = serializerCache
 
@@ -64,7 +64,9 @@ function acceptsSerializerPlugin (fastify, options, next) {
   next()
 }
 
-module.exports = fp(acceptsSerializerPlugin, {
+module.exports = fp(fastifyAcceptsSerializer, {
   fastify: '4.x',
   name: '@fastify/accepts-serializer'
 })
+module.exports.default = fastifyAcceptsSerializer
+module.exports.fastifyAcceptsSerializer = fastifyAcceptsSerializer
