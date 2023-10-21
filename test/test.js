@@ -20,15 +20,15 @@ test('serializer', t => {
   fastify.register(plugin, {
     serializers: [
       {
-        regex: /^application\/yaml$/,
+        regex: /^application\/yaml$/u,
         serializer: body => YAML.stringify(body)
       },
       {
-        regex: /^application\/x-protobuf$/,
+        regex: /^application\/x-protobuf$/u,
         serializer: body => AwesomeMessage.encode(AwesomeMessage.create(body)).finish()
       },
       {
-        regex: /^application\/x-msgpack$/,
+        regex: /^application\/x-msgpack$/u,
         serializer: body => msgpack.encode(body)
       }
     ]
@@ -116,7 +116,7 @@ test('serializer - default = undefined', t => {
   fastify.register(plugin, {
     serializers: [
       {
-        regex: /^application\/yaml$/,
+        regex: /^application\/yaml$/u,
         serializer: body => YAML.stringify(body)
       }
     ]
@@ -187,7 +187,7 @@ test('serializer - default = application/json by custom', t => {
   fastify.register(plugin, {
     serializers: [
       {
-        regex: /^application\/json$/,
+        regex: /^application\/json$/u,
         serializer: () => 'my-custom-string'
       }
     ],
@@ -223,7 +223,7 @@ test('serializer - default = application/yaml', t => {
   fastify.register(plugin, {
     serializers: [
       {
-        regex: /^application\/yaml$/,
+        regex: /^application\/yaml$/u,
         serializer: body => YAML.stringify(body)
       }
     ],
@@ -260,7 +260,7 @@ test('serializer per route', t => {
   fastify.register(plugin, {
     serializers: [
       {
-        regex: /^application\/yaml$/,
+        regex: /^application\/yaml$/u,
         serializer: body => YAML.stringify(body)
       }
     ],
@@ -323,7 +323,7 @@ test('serializer per route through route option', t => {
   fastify.register(plugin, {
     serializers: [
       {
-        regex: /^application\/yaml$/,
+        regex: /^application\/yaml$/u,
         serializer: body => YAML.stringify(body)
       }
     ],
@@ -333,7 +333,7 @@ test('serializer per route through route option', t => {
   const config = {
     serializers: [
       {
-        regex: /^application\/x-protobuf$/,
+        regex: /^application\/x-protobuf$/u,
         serializer: body => AwesomeMessage.encode(AwesomeMessage.create(body)).finish()
       }
     ]
@@ -463,7 +463,7 @@ test('serializer cache', t => {
   fastify.register(plugin, {
     serializers: [
       {
-        regex: /^application\/cache$/,
+        regex: /^application\/cache$/u,
         serializer: (body) => body
       }
     ]
