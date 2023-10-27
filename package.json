@@ -3,6 +3,7 @@
   "version": "5.2.0",
   "description": "Serializer according to the accept header",
   "main": "index.js",
+  "type": "commonjs",
   "types": "types/index.d.ts",
   "scripts": {
     "lint": "standard --verbose | snazzy",
