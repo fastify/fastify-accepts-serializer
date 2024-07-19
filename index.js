@@ -22,7 +22,7 @@ function fastifyAcceptsSerializer (fastify, options, next) {
 
     if (request.routeOptions.config.serializers) {
       // keep route level cache in config to prevent messing with global cache
-      request.routeOptions.config.serializers.cache = Object.assign({}, request.routeOptions.config.serializers.cache)
+      request.routeOptions.config.serializers.cache = { ...request.routeOptions.config.serializers.cache }
       reply.serializer.serializerManager = SerializerManager.expand({
         serializers: request.routeOptions.config.serializers,
         cache: request.routeOptions.config.serializers.cache
