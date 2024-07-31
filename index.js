@@ -65,7 +65,7 @@ function fastifyAcceptsSerializer (fastify, options, next) {
 }
 
 module.exports = fp(fastifyAcceptsSerializer, {
-  fastify: '4.x',
+  fastify: '5.x',
   name: '@fastify/accepts-serializer'
 })
 module.exports.default = fastifyAcceptsSerializer
