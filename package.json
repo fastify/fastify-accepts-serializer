@@ -1,6 +1,6 @@
 {
   "name": "@fastify/accepts-serializer",
-  "version": "6.0.0-pre.fv5.2",
+  "version": "6.0.0",
   "description": "Serializer according to the accept header",
   "main": "index.js",
   "type": "commonjs",
@@ -27,7 +27,7 @@
   "homepage": "https://github.com/fastify/fastify-accepts-serializer#readme",
   "devDependencies": {
     "@fastify/pre-commit": "^2.1.0",
-    "fastify": "^5.0.0-alpha.3",
+    "fastify": "^5.0.0-alpha.4",
     "msgpack5": "^6.0.2",
     "protobufjs": "^7.2.6",
     "snazzy": "^9.0.0",
@@ -37,8 +37,8 @@
     "yamljs": "^0.3.0"
   },
   "dependencies": {
-    "@fastify/accepts": "^5.0.0-pre.fv5.1",
-    "fastify-plugin": "^5.0.0-pre.fv5.1"
+    "@fastify/accepts": "^5.0.0",
+    "fastify-plugin": "^5.0.0"
   },
   "publishConfig": {
     "access": "public"
