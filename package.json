@@ -8,7 +8,7 @@
   "scripts": {
     "lint": "standard --verbose | snazzy",
     "test": "npm run test:unit && npm run test:typescript",
-    "test:unit": "tap",
+    "test:unit": "c8 node --test test/*.js",
     "test:typescript": "tsd"
   },
   "pre-commit": [
@@ -27,12 +27,13 @@
   "homepage": "https://github.com/fastify/fastify-accepts-serializer#readme",
   "devDependencies": {
     "@fastify/pre-commit": "^2.1.0",
+    "@types/node": "^20.11.1",
+    "c8": "^10.1.2",
     "fastify": "^5.0.0",
     "msgpack5": "^6.0.2",
     "protobufjs": "^7.2.6",
     "snazzy": "^9.0.0",
     "standard": "^17.1.0",
-    "tap": "^18.7.1",
     "tsd": "^0.31.1",
     "yamljs": "^0.3.0"
   },
