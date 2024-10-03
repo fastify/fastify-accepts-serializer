@@ -8,7 +8,7 @@
   "scripts": {
     "lint": "standard --verbose | snazzy",
     "test": "npm run test:unit && npm run test:typescript",
-    "test:unit": "c8 --100 node --test test/*.js",
+    "test:unit": "c8 --100 node --test",
     "test:typescript": "tsd"
   },
   "pre-commit": [
