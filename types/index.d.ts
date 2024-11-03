@@ -13,7 +13,7 @@ declare namespace fastifyAcceptsSerializer {
     regex: RegExp;
     serializer: (body: any) => string;
   }
-  
+
   export interface FastifyAcceptsSerializerPluginOptions {
     serializers: SerializerConfig[];
     default: string;
