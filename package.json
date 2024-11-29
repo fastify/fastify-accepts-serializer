@@ -6,7 +6,8 @@
   "type": "commonjs",
   "types": "types/index.d.ts",
   "scripts": {
-    "lint": "standard --verbose | snazzy",
+    "lint": "eslint",
+    "lint:fix": "eslint --fix",
     "test": "npm run test:unit && npm run test:typescript",
     "test:unit": "c8 --100 node --test",
     "test:typescript": "tsd"
@@ -30,9 +31,8 @@
     "c8": "^10.1.2",
     "fastify": "^5.0.0",
     "msgpack5": "^6.0.2",
+    "neostandard": "^0.11.9",
     "protobufjs": "^7.2.6",
-    "snazzy": "^9.0.0",
-    "standard": "^17.1.0",
     "tsd": "^0.31.1",
     "yamljs": "^0.3.0"
   },

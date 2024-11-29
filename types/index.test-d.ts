@@ -1,6 +1,6 @@
-import Fastify from 'fastify';
-import fastifyAcceptsSerializer from '..';
-import { expectError } from "tsd";
+import Fastify from 'fastify'
+import fastifyAcceptsSerializer from '..'
+import { expectError } from 'tsd'
 
 const fastify = Fastify()
 
@@ -16,17 +16,19 @@ fastify.register(fastifyAcceptsSerializer, {
 })
 
 expectError(fastify.register(fastifyAcceptsSerializer, { }))
-expectError(fastify.register(fastifyAcceptsSerializer, { serializers: [], default: 1}))
-expectError(fastify.register(fastifyAcceptsSerializer, { serializers: [{}], default: 'application/json'}))
+expectError(fastify.register(fastifyAcceptsSerializer, { serializers: [], default: 1 }))
+expectError(fastify.register(fastifyAcceptsSerializer, { serializers: [{}], default: 'application/json' }))
 
 // Per-router serializers
-fastify.get('/request', { config: {
-  serializers: [
-    {
-      regex: /^application\/json$/,
-      serializer: body => JSON.stringify(body)
-    }
-  ]
-} }, function (req, reply) {
-  reply.send({pippo: 'pluto'})
+fastify.get('/request', {
+  config: {
+    serializers: [
+      {
+        regex: /^application\/json$/,
+        serializer: body => JSON.stringify(body)
+      }
+    ]
+  }
+}, function (req, reply) {
+  reply.send({ pippo: 'pluto' })
 })
