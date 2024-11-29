@@ -1,4 +1,4 @@
-import { FastifyPluginCallback } from 'fastify';
+import { FastifyPluginCallback } from 'fastify'
 
 declare module 'fastify' {
   export interface FastifyContextConfig {
@@ -6,7 +6,7 @@ declare module 'fastify' {
   }
 }
 
-type FastifyAcceptsSerializer = FastifyPluginCallback<fastifyAcceptsSerializer.FastifyAcceptsSerializerPluginOptions>;
+type FastifyAcceptsSerializer = FastifyPluginCallback<fastifyAcceptsSerializer.FastifyAcceptsSerializerPluginOptions>
 
 declare namespace fastifyAcceptsSerializer {
   export interface SerializerConfig {
@@ -23,5 +23,5 @@ declare namespace fastifyAcceptsSerializer {
   export { fastifyAcceptsSerializer as default }
 }
 
-declare function fastifyAcceptsSerializer(...params: Parameters<FastifyAcceptsSerializer>): ReturnType<FastifyAcceptsSerializer>
+declare function fastifyAcceptsSerializer (...params: Parameters<FastifyAcceptsSerializer>): ReturnType<FastifyAcceptsSerializer>
 export = fastifyAcceptsSerializer
