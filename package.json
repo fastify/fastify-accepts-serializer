@@ -21,11 +21,28 @@
     "url": "git+https://github.com/fastify/fastify-accepts-serializer.git"
   },
   "author": "allevo",
+  "contributors": [
+    {
+      "name": "Frazer Smith",
+      "email": "frazer.dev@icloud.com",
+      "url": "https://github.com/fdawgs"
+    }
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/fastify/fastify-accepts-serializer/issues"
   },
   "homepage": "https://github.com/fastify/fastify-accepts-serializer#readme",
+  "funding": [
+    {
+      "type": "github",
+      "url": "https://github.com/sponsors/fastify"
+    },
+    {
+      "type": "opencollective",
+      "url": "https://opencollective.com/fastify"
+    }
+  ],
   "devDependencies": {
     "@fastify/pre-commit": "^2.1.0",
     "fastify": "^5.0.0",
