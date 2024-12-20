@@ -1,8 +1,6 @@
 'use strict'
 
-const t = require('tap')
-const test = t.test
-
+const { test } = require('node:test')
 const plugin = require('../')
 const Fastify = require('fastify')
 const protobuf = require('protobufjs')
@@ -12,12 +10,13 @@ const msgpack = require('msgpack5')()
 const root = protobuf.loadSync('test/awesome.proto')
 const AwesomeMessage = root.lookupType('awesomepackage.AwesomeMessage')
 
-test('serializer', t => {
+test('serializer', async t => {
   t.plan(4)
 
   const fastify = Fastify()
+  t.after(() => fastify.close())
 
-  fastify.register(plugin, {
+  await fastify.register(plugin, {
     serializers: [
       {
         regex: /^application\/yaml$/,
@@ -41,7 +40,7 @@ test('serializer', t => {
     reply.send({ pippo: 'pluto' })
   })
 
-  t.test('application/yaml -> yaml', t => {
+  await t.test('application/yaml -> yaml', (t, done) => {
     t.plan(3)
     fastify.inject({
       method: 'GET',
@@ -51,13 +50,14 @@ test('serializer', t => {
         accept: 'application/yaml'
       }
     }, (err, res) => {
-      t.error(err)
-      t.strictSame(res.headers['content-type'], 'application/yaml')
-      t.strictSame(res.payload, YAML.stringify({ pippo: 'pluto' }))
+      t.assert.ifError(err)
+      t.assert.strictEqual(res.headers['content-type'], 'application/yaml')
+      t.assert.strictEqual(res.payload, YAML.stringify({ pippo: 'pluto' }))
+      done()
     })
   })
 
-  t.test('application/x-protobuf -> protobuf', t => {
+  await t.test('application/x-protobuf -> protobuf', (t, done) => {
     t.plan(3)
     fastify.inject({
       method: 'GET',
@@ -67,13 +67,14 @@ test('serializer', t => {
         accept: 'application/x-protobuf'
       }
     }, (err, res) => {
-      t.error(err)
-      t.strictSame(res.headers['content-type'], 'application/x-protobuf')
-      t.strictSame(res.payload, AwesomeMessage.encode(AwesomeMessage.create({ pippo: 'pluto' })).finish().toString())
+      t.assert.ifError(err)
+      t.assert.strictEqual(res.headers['content-type'], 'application/x-protobuf')
+      t.assert.strictEqual(res.payload, AwesomeMessage.encode(AwesomeMessage.create({ pippo: 'pluto' })).finish().toString())
+      done()
     })
   })
 
-  t.test('application/x-protobuf -> protobuf', t => {
+  await t.test('application/x-protobuf -> protobuf', (t, done) => {
     t.plan(3)
 
     fastify.inject({
@@ -84,13 +85,14 @@ test('serializer', t => {
         accept: 'application/x-protobuf'
       }
     }, (err, res) => {
-      t.error(err)
-      t.strictSame(res.headers['content-type'], 'application/x-protobuf')
-      t.strictSame(res.payload, AwesomeMessage.encode(AwesomeMessage.create({ pippo: 'pluto' })).finish().toString())
+      t.assert.ifError(err)
+      t.assert.strictEqual(res.headers['content-type'], 'application/x-protobuf')
+      t.assert.strictEqual(res.payload, AwesomeMessage.encode(AwesomeMessage.create({ pippo: 'pluto' })).finish().toString())
+      done()
     })
   })
 
-  t.test('application/x-msgpack -> msgpack', t => {
+  await t.test('application/x-msgpack -> msgpack', (t, done) => {
     t.plan(3)
 
     fastify.inject({
@@ -101,17 +103,19 @@ test('serializer', t => {
         accept: 'application/x-msgpack'
       }
     }, (err, res) => {
-      t.error(err)
-      t.strictSame(res.headers['content-type'], 'application/x-msgpack')
-      t.strictSame(res.payload, msgpack.encode({ pippo: 'pluto' }).toString())
+      t.assert.ifError(err)
+      t.assert.strictEqual(res.headers['content-type'], 'application/x-msgpack')
+      t.assert.strictEqual(res.payload, msgpack.encode({ pippo: 'pluto' }).toString())
+      done()
     })
   })
 })
 
-test('serializer - default = undefined', t => {
+test('serializer - default = undefined', async t => {
   t.plan(1)
 
   const fastify = Fastify()
+  t.after(() => fastify.close())
 
   fastify.register(plugin, {
     serializers: [
@@ -126,7 +130,7 @@ test('serializer - default = undefined', t => {
     reply.send({ pippo: 'pluto' })
   })
 
-  t.test('no match -> 406', t => {
+  await t.test('no match -> 406', (t, done) => {
     t.plan(4)
 
     fastify.inject({
@@ -137,21 +141,23 @@ test('serializer - default = undefined', t => {
         accept: 'text/html'
       }
     }, (err, res) => {
-      t.error(err)
-      t.strictSame(res.headers['content-type'], 'application/json; charset=utf-8')
-      t.strictSame(res.statusCode, 406)
-      t.strictSame(res.payload, JSON.stringify({
+      t.assert.ifError(err)
+      t.assert.strictEqual(res.headers['content-type'], 'application/json; charset=utf-8')
+      t.assert.strictEqual(res.statusCode, 406)
+      t.assert.strictEqual(res.payload, JSON.stringify({
         statusCode: 406,
         error: 'Not Acceptable',
         message: 'Allowed: /^application\\/yaml$/,application/json'
       }))
+      done()
     })
   })
 })
 
-test('serializer - default = application/json by fastify', t => {
+test('serializer - default = application/json by fastify', async t => {
   t.plan(1)
   const fastify = Fastify()
+  t.after(() => fastify.close())
 
   fastify.register(plugin, {
     serializers: [],
@@ -162,7 +168,7 @@ test('serializer - default = application/json by fastify', t => {
     reply.send({ pippo: 'pluto' })
   })
 
-  t.test('no match -> json', t => {
+  await t.test('no match -> json', (t, done) => {
     t.plan(3)
 
     fastify.inject({
@@ -173,17 +179,19 @@ test('serializer - default = application/json by fastify', t => {
         accept: 'text/html'
       }
     }, (err, res) => {
-      t.error(err)
-      t.strictSame(res.headers['content-type'], 'application/json; charset=utf-8')
-      t.strictSame(res.payload, JSON.stringify({ pippo: 'pluto' }))
+      t.assert.ifError(err)
+      t.assert.strictEqual(res.headers['content-type'], 'application/json; charset=utf-8')
+      t.assert.strictEqual(res.payload, JSON.stringify({ pippo: 'pluto' }))
+      done()
     })
   })
 })
 
-test('serializer - default = application/json by custom', t => {
+test('serializer - default = application/json by custom', async t => {
   t.plan(1)
 
   const fastify = Fastify()
+  t.after(() => fastify.close())
   fastify.register(plugin, {
     serializers: [
       {
@@ -198,7 +206,7 @@ test('serializer - default = application/json by custom', t => {
     reply.send({ pippo: 'pluto' })
   })
 
-  t.test('no match -> json', t => {
+  await t.test('no match -> json', (t, done) => {
     t.plan(3)
 
     fastify.inject({
@@ -209,17 +217,19 @@ test('serializer - default = application/json by custom', t => {
         accept: 'text/html'
       }
     }, (err, res) => {
-      t.error(err)
-      t.strictSame(res.headers['content-type'], 'application/json')
-      t.strictSame(res.payload, 'my-custom-string')
+      t.assert.ifError(err)
+      t.assert.strictEqual(res.headers['content-type'], 'application/json')
+      t.assert.strictEqual(res.payload, 'my-custom-string')
+      done()
     })
   })
 })
 
-test('serializer - default = application/yaml', t => {
+test('serializer - default = application/yaml', async t => {
   t.plan(1)
 
   const fastify = Fastify()
+  t.after(() => fastify.close())
   fastify.register(plugin, {
     serializers: [
       {
@@ -234,7 +244,7 @@ test('serializer - default = application/yaml', t => {
     reply.send({ pippo: 'pluto' })
   })
 
-  t.test('no match -> yaml', t => {
+  await t.test('no match -> yaml', (t, done) => {
     t.plan(3)
 
     fastify.inject({
@@ -245,19 +255,21 @@ test('serializer - default = application/yaml', t => {
         accept: 'text/html'
       }
     }, (err, res) => {
-      t.error(err)
-      t.strictSame(res.headers['content-type'], 'application/yaml')
-      t.strictSame(res.payload, YAML.stringify({ pippo: 'pluto' }))
+      t.assert.ifError(err)
+      t.assert.strictEqual(res.headers['content-type'], 'application/yaml')
+      t.assert.strictEqual(res.payload, YAML.stringify({ pippo: 'pluto' }))
+      done()
     })
   })
 })
 
-test('serializer per route', t => {
+test('serializer per route', async t => {
   t.plan(2)
 
   const fastify = Fastify()
+  t.after(() => fastify.close())
 
-  fastify.register(plugin, {
+  await fastify.register(plugin, {
     serializers: [
       {
         regex: /^application\/yaml$/,
@@ -280,7 +292,7 @@ test('serializer per route', t => {
       .send({ pippo: 'pluto' })
   })
 
-  t.test('overwrite', t => {
+  await t.test('overwrite', (t, done) => {
     t.plan(3)
 
     fastify.inject({
@@ -291,13 +303,14 @@ test('serializer per route', t => {
         accept: 'application/yaml'
       }
     }, (err, res) => {
-      t.error(err)
-      t.strictSame(res.headers['content-type'], 'application/yaml')
-      t.strictSame(res.payload, 'my-custom-string')
+      t.assert.ifError(err)
+      t.assert.strictEqual(res.headers['content-type'], 'application/yaml')
+      t.assert.strictEqual(res.payload, 'my-custom-string')
+      done()
     })
   })
 
-  t.test('not defined globally', t => {
+  await t.test('not defined globally', (t, done) => {
     t.plan(3)
 
     fastify.inject({
@@ -308,19 +321,21 @@ test('serializer per route', t => {
         accept: 'application/x-msgpack'
       }
     }, (err, res) => {
-      t.error(err)
-      t.strictSame(res.headers['content-type'], 'application/x-msgpack')
-      t.strictSame(res.payload, 'my-custom-string-msgpack')
+      t.assert.ifError(err)
+      t.assert.strictEqual(res.headers['content-type'], 'application/x-msgpack')
+      t.assert.strictEqual(res.payload, 'my-custom-string-msgpack')
+      done()
     })
   })
 })
 
-test('serializer per route through route option', t => {
+test('serializer per route through route option', async t => {
   t.plan(3)
 
   const fastify = Fastify()
+  t.after(() => fastify.close())
 
-  fastify.register(plugin, {
+  await fastify.register(plugin, {
     serializers: [
       {
         regex: /^application\/yaml$/,
@@ -353,7 +368,7 @@ test('serializer per route through route option', t => {
       .send({ pippo: 'pluto' })
   })
 
-  t.test('application/x-protobuf -> protobuf', t => {
+  await t.test('application/x-protobuf -> protobuf', (t, done) => {
     t.plan(3)
     fastify.inject({
       method: 'GET',
@@ -363,13 +378,14 @@ test('serializer per route through route option', t => {
         accept: 'application/x-protobuf'
       }
     }, (err, res) => {
-      t.error(err)
-      t.strictSame(res.headers['content-type'], 'application/x-protobuf')
-      t.strictSame(res.payload, AwesomeMessage.encode(AwesomeMessage.create({ pippo: 'pluto' })).finish().toString())
+      t.assert.ifError(err)
+      t.assert.strictEqual(res.headers['content-type'], 'application/x-protobuf')
+      t.assert.strictEqual(res.payload, AwesomeMessage.encode(AwesomeMessage.create({ pippo: 'pluto' })).finish().toString())
+      done()
     })
   })
 
-  t.test('route level should not pullute global cache', t => {
+  await t.test('route level should not pullute global cache', (t, done) => {
     t.plan(3)
 
     fastify.inject({
@@ -380,13 +396,14 @@ test('serializer per route through route option', t => {
         accept: 'application/yaml'
       }
     }, (err, res) => {
-      t.error(err)
-      t.strictSame(res.headers['content-type'], 'application/yaml')
-      t.strictSame(res.payload, 'my-custom-string')
+      t.assert.ifError(err)
+      t.assert.strictEqual(res.headers['content-type'], 'application/yaml')
+      t.assert.strictEqual(res.payload, 'my-custom-string')
+      done()
     })
   })
 
-  t.test('overwrite by fastify reply', t => {
+  await t.test('overwrite by fastify reply', (t, done) => {
     t.plan(3)
 
     fastify.inject({
@@ -397,25 +414,28 @@ test('serializer per route through route option', t => {
         accept: 'application/yaml'
       }
     }, (err, res) => {
-      t.error(err)
-      t.strictSame(res.headers['content-type'], 'application/yaml')
-      t.strictSame(res.payload, 'foo-bar-baz')
+      t.assert.ifError(err)
+      t.assert.strictEqual(res.headers['content-type'], 'application/yaml')
+      t.assert.strictEqual(res.payload, 'foo-bar-baz')
+      done()
     })
   })
 })
 
-test('serializer without conf', t => {
+test('serializer without conf', async t => {
   t.plan(2)
 
   const fastify = Fastify()
 
-  fastify.register(plugin)
+  t.after(() => fastify.close())
+
+  await fastify.register(plugin)
 
   fastify.get('/request', function (req, reply) {
     reply.send({ pippo: 'pluto' })
   })
 
-  t.test('application/json -> json', t => {
+  await t.test('application/json -> json', (t, done) => {
     t.plan(3)
 
     fastify.inject({
@@ -426,13 +446,14 @@ test('serializer without conf', t => {
         accept: 'application/json'
       }
     }, (err, res) => {
-      t.error(err)
-      t.strictSame(res.headers['content-type'], 'application/json; charset=utf-8')
-      t.strictSame(res.payload, JSON.stringify({ pippo: 'pluto' }))
+      t.assert.ifError(err)
+      t.assert.strictEqual(res.headers['content-type'], 'application/json; charset=utf-8')
+      t.assert.strictEqual(res.payload, JSON.stringify({ pippo: 'pluto' }))
+      done()
     })
   })
 
-  t.test('application/yaml -> 406', t => {
+  await t.test('application/yaml -> 406', (t, done) => {
     t.plan(4)
 
     fastify.inject({
@@ -443,24 +464,25 @@ test('serializer without conf', t => {
         accept: 'application/yaml'
       }
     }, (err, res) => {
-      t.error(err)
-      t.strictSame(res.headers['content-type'], 'application/json; charset=utf-8')
-      t.strictSame(res.statusCode, 406)
-      t.strictSame(res.payload, JSON.stringify({
+      t.assert.ifError(err)
+      t.assert.strictEqual(res.headers['content-type'], 'application/json; charset=utf-8')
+      t.assert.strictEqual(res.statusCode, 406)
+      t.assert.strictEqual(res.payload, JSON.stringify({
         statusCode: 406,
         error: 'Not Acceptable',
         message: 'Allowed: application/json'
       }))
+      done()
     })
   })
 })
 
-test('serializer cache', t => {
+test('serializer cache', async t => {
   t.plan(1)
 
   const fastify = Fastify()
 
-  fastify.register(plugin, {
+  await fastify.register(plugin, {
     serializers: [
       {
         regex: /^application\/cache$/,
@@ -469,13 +491,14 @@ test('serializer cache', t => {
     ]
   })
 
-  t.test('it shoud populate cache', t => {
+  await t.test('it shoud populate cache', (t, done) => {
     t.plan(8)
 
-    fastify.get('/request', function (req, reply) {
-      t.strictSame(Object.keys(reply.serializer.cache), ['application/cache'])
+    fastify.get('/request', async function (req, reply) {
+      console.log(reply.serializer.cache)
+      t.assert.strictEqual(Object.keys(reply.serializer.cache), ['application/cache'])
 
-      reply.send('cache')
+      return reply.send('cache')
     })
 
     fastify.inject({
@@ -486,9 +509,10 @@ test('serializer cache', t => {
         accept: 'application/cache'
       }
     }, (err, res) => {
-      t.error(err)
-      t.strictSame(res.headers['content-type'], 'application/cache')
-      t.strictSame(res.payload, 'cache')
+      t.assert.ifError(err)
+      console.log(res.headers['content-type'])
+      t.assert.strictEqual(res.headers['content-type'], 'application/cache')
+      t.assert.strictEqual(res.payload, 'cache')
     })
 
     fastify.inject({
@@ -499,9 +523,11 @@ test('serializer cache', t => {
         accept: 'application/cache'
       }
     }, (err, res) => {
-      t.error(err)
-      t.strictSame(res.headers['content-type'], 'application/cache')
-      t.strictSame(res.payload, 'cache')
+      t.assert.ifError(err)
+      console.log(res.headers['content-type'])
+      t.assert.strictEqual(res.headers['content-type'], 'application/cache')
+      t.assert.strictEqual(res.payload, 'cache')
+      done()
     })
   })
 })
