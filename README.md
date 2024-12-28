@@ -69,7 +69,7 @@ fastify.get('/request', { config }, function (req, reply) {
 })
 ```
 
-## Behaviour
+## Behavior
 
 For each route, a SerializerManager is defined, which has both per-route and global serializer definitions.
 
