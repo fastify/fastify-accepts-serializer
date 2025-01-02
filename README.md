@@ -51,7 +51,7 @@ fastify.register(require('@fastify/accepts-serializer'), {
       serializer: body => msgpack.encode(body)
     }
   ],
-  default: 'application/yaml' // MIME type used if Accept header don't match anything
+  default: 'application/yaml' // MIME type used if Accept header does not match anything
 })
 
 // Per-router serializers
