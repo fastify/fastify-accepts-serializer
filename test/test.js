@@ -33,11 +33,11 @@ test('serializer', t => {
       }
     ]
   })
-  fastify.get('/request', function (req, reply) {
+  fastify.get('/request', function (_req, reply) {
     reply.send({ pippo: 'pluto' })
   })
 
-  fastify.get('/request2', function (req, reply) {
+  fastify.get('/request2', function (_req, reply) {
     reply.send({ pippo: 'pluto' })
   })
 
@@ -122,7 +122,7 @@ test('serializer - default = undefined', t => {
     ]
   })
 
-  fastify.get('/request', function (req, reply) {
+  fastify.get('/request', function (_req, reply) {
     reply.send({ pippo: 'pluto' })
   })
 
@@ -158,7 +158,7 @@ test('serializer - default = application/json by fastify', t => {
     default: 'application/json'
   })
 
-  fastify.get('/request', function (req, reply) {
+  fastify.get('/request', function (_req, reply) {
     reply.send({ pippo: 'pluto' })
   })
 
@@ -194,7 +194,7 @@ test('serializer - default = application/json by custom', t => {
     default: 'application/json'
   })
 
-  fastify.get('/request', function (req, reply) {
+  fastify.get('/request', function (_req, reply) {
     reply.send({ pippo: 'pluto' })
   })
 
@@ -230,7 +230,7 @@ test('serializer - default = application/yaml', t => {
     default: 'application/yaml'
   })
 
-  fastify.get('/request', function (req, reply) {
+  fastify.get('/request', function (_req, reply) {
     reply.send({ pippo: 'pluto' })
   })
 
@@ -267,13 +267,13 @@ test('serializer per route', t => {
     default: 'application/yaml'
   })
 
-  fastify.get('/request', function (req, reply) {
+  fastify.get('/request', function (_req, reply) {
     reply
       .serializer(_ => 'my-custom-string')
       .send({ pippo: 'pluto' })
   })
 
-  fastify.get('/request2', function (req, reply) {
+  fastify.get('/request2', function (_req, reply) {
     reply
       .type('application/x-msgpack')
       .serializer(_ => 'my-custom-string-msgpack')
@@ -339,15 +339,15 @@ test('serializer per route through route option', t => {
     ]
   }
 
-  fastify.get('/request', { config }, function (req, reply) {
+  fastify.get('/request', { config }, function (_req, reply) {
     reply.send({ pippo: 'pluto' })
   })
 
-  fastify.get('/request2', function (req, reply) {
+  fastify.get('/request2', function (_req, reply) {
     reply.send('my-custom-string')
   })
 
-  fastify.get('/request3', function (req, reply) {
+  fastify.get('/request3', function (_req, reply) {
     reply
       .serializer(_ => 'foo-bar-baz')
       .send({ pippo: 'pluto' })
@@ -411,7 +411,7 @@ test('serializer without conf', t => {
 
   fastify.register(plugin)
 
-  fastify.get('/request', function (req, reply) {
+  fastify.get('/request', function (_req, reply) {
     reply.send({ pippo: 'pluto' })
   })
 
@@ -472,7 +472,7 @@ test('serializer cache', t => {
   t.test('it shoud populate cache', t => {
     t.plan(8)
 
-    fastify.get('/request', function (req, reply) {
+    fastify.get('/request', function (_req, reply) {
       t.strictSame(Object.keys(reply.serializer.cache), ['application/cache'])
 
       reply.send('cache')

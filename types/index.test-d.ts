@@ -29,6 +29,6 @@ fastify.get('/request', {
       }
     ]
   }
-}, function (req, reply) {
+}, function (_req, reply) {
   reply.send({ pippo: 'pluto' })
 })
