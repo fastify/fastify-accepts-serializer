@@ -1,6 +1,6 @@
 # @fastify/accepts-serializer
 
-[![CI](https://github.com/fastify/fastify-accepts-serializer/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/fastify/fastify-accepts-serializer/actions/workflows/ci.yml)
+[![CI](https://github.com/fastify/fastify-accepts-serializer/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/fastify/fastify-accepts-serializer/actions/workflows/ci.yml)
 [![npm version](https://img.shields.io/npm/v/@fastify/accepts-serializer)](https://www.npmjs.com/package/@fastify/accepts-serializer)
 [![neostandard javascript style](https://img.shields.io/badge/code_style-neostandard-brightgreen?style=flat)](https://github.com/neostandard/neostandard)
 
