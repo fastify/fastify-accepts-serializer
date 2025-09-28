@@ -1,6 +1,6 @@
 {
   "name": "@fastify/accepts-serializer",
-  "version": "6.0.2",
+  "version": "6.0.3",
   "description": "Serializer according to the accept header",
   "main": "index.js",
   "type": "commonjs",
