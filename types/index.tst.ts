@@ -1,6 +1,6 @@
 import Fastify from 'fastify'
 import fastifyAcceptsSerializer from '..'
-import { expectError } from 'tsd'
+import { expect } from 'tstyche'
 
 const fastify = Fastify()
 
@@ -15,9 +15,15 @@ fastify.register(fastifyAcceptsSerializer, {
   default: 'application/json' // MIME type used if Accept header don't match anything
 })
 
-expectError(fastify.register(fastifyAcceptsSerializer, { }))
-expectError(fastify.register(fastifyAcceptsSerializer, { serializers: [], default: 1 }))
-expectError(fastify.register(fastifyAcceptsSerializer, { serializers: [{}], default: 'application/json' }))
+expect(fastify.register).type.not.toBeCallableWith(fastifyAcceptsSerializer, {})
+expect(fastify.register).type.not.toBeCallableWith(fastifyAcceptsSerializer, {
+  serializers: [],
+  default: 1
+})
+expect(fastify.register).type.not.toBeCallableWith(fastifyAcceptsSerializer, {
+  serializers: [{}],
+  default: 'application/json'
+})
 
 // Per-router serializers
 fastify.get('/request', {
