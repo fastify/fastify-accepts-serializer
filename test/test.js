@@ -458,7 +458,7 @@ test('serializer cache', async t => {
     t.plan(6)
 
     fastify.get('/request', function (_req, reply) {
-      t.assert.deepStrictEqual(Object.keys(reply.serializer.cache), ['application/cache'])
+      t.assert.deepStrictEqual(reply.serializer.cache.keys(), ['application/cache'])
 
       reply.send('cache')
     })
@@ -486,5 +486,62 @@ test('serializer cache', async t => {
 
     t.assert.deepStrictEqual(response2.headers['content-type'], 'application/cache')
     t.assert.deepStrictEqual(response2.payload, 'cache')
+  })
+})
+
+test('serializer cache is bounded (GHSA-qxhc-wx3p-2wmg)', async t => {
+  t.plan(2)
+
+  const MAX_CACHE = 5
+  const fastify = Fastify()
+
+  fastify.register(plugin, {
+    cacheSize: MAX_CACHE,
+    serializers: [
+      {
+        regex: /^application\/poc$/,
+        serializer: body => JSON.stringify(body)
+      }
+    ]
+  })
+
+  fastify.get('/', async function (_request, reply) {
+    return reply.code(204).send()
+  })
+
+  // Registered before any inject so the server is not yet started
+  let cacheSize = 0
+  let cacheMax = 0
+  fastify.get('/cache-size', function (_req, reply) {
+    cacheSize = reply.serializer.cache.size
+    cacheMax = reply.serializer.cache.max
+    reply.send({ size: cacheSize })
+  })
+
+  // Send more distinct Accept header variants than the cache max.
+  // An attacker can craft headers like "application/vnd.dummy-0001, application/poc" to create
+  // a separate cache entry per request while still matching the configured serializer.
+  const attackVariants = Array.from(
+    { length: MAX_CACHE + 10 },
+    (_, i) => `application/vnd.dummy-${String(i).padStart(4, '0')}, application/poc`
+  )
+
+  for (const accept of attackVariants) {
+    await fastify.inject({ method: 'GET', url: '/', headers: { accept } })
+  }
+
+  await fastify.inject({ method: 'GET', url: '/cache-size', headers: { accept: 'application/json' } })
+
+  await t.test('cache max is set to the configured cacheSize option', t => {
+    t.plan(1)
+    t.assert.strictEqual(cacheMax, MAX_CACHE)
+  })
+
+  await t.test('cache size does not exceed cacheSize even under attacker-controlled Accept variants', t => {
+    t.plan(1)
+    t.assert.ok(
+      cacheSize <= MAX_CACHE,
+      `Cache grew to ${cacheSize} entries after ${attackVariants.length} distinct Accept variants — unbounded growth confirmed`
+    )
   })
 })

@@ -51,7 +51,8 @@ fastify.register(require('@fastify/accepts-serializer'), {
       serializer: body => msgpack.encode(body)
     }
   ],
-  default: 'application/yaml' // MIME type used if Accept header does not match anything
+  default: 'application/yaml', // MIME type used if Accept header does not match anything
+  cacheSize: 100               // max number of Accept header combinations to cache (default: 100)
 })
 
 // Per-router serializers
@@ -69,6 +70,14 @@ fastify.get('/request', { config }, function (req, reply) {
 })
 ```
 
+## Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `serializers` | `Array` | `[]` | List of serializer definitions, each with a `regex` and a `serializer` function |
+| `default` | `string` | — | MIME type to use when no serializer matches the `Accept` header. If omitted, unmatched requests receive a `406` response |
+| `cacheSize` | `number` | `100` | Maximum number of distinct `Accept` header combinations to cache. Entries are evicted in LRU order once the limit is reached |
+
 ## Behavior
 
 For each route, a SerializerManager is defined, which has both per-route and global serializer definitions.
@@ -76,6 +85,8 @@ For each route, a SerializerManager is defined, which has both per-route and glo
 The MIME type `application/json` is always handled by `fastify` if no serializer is registered for that MIME type.
 
 If no `default` key is specified in configuration, all requests with an unknown `Accept` header will be replied to with a 406 response (a boom error is used).
+
+Serializer selection results are cached by `Accept` header value using an LRU cache bounded by `cacheSize`. This prevents unbounded memory growth from attacker-controlled `Accept` header variants.
 
 ## License
 

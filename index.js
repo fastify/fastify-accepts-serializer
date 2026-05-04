@@ -1,12 +1,14 @@
 'use strict'
 
 const fp = require('fastify-plugin')
+const { LruObject } = require('toad-cache')
 const SerializerManager = require('./SerializerManager')
 
 const FASTIFY_DEFAULT_SERIALIZE_MIME_TYPE = 'application/json'
 
 function fastifyAcceptsSerializer (fastify, options, next) {
-  const serializerCache = {}
+  const cacheSize = options.cacheSize ?? 100
+  const serializerCache = new LruObject(cacheSize)
   options.cache = serializerCache
 
   const globalSerializerManager = SerializerManager.build(options)
@@ -22,7 +24,9 @@ function fastifyAcceptsSerializer (fastify, options, next) {
 
     if (request.routeOptions.config.serializers) {
       // keep route level cache in config to prevent messing with global cache
-      request.routeOptions.config.serializers.cache = Object.assign({}, request.routeOptions.config.serializers.cache)
+      if (!request.routeOptions.config.serializers.cache) {
+        request.routeOptions.config.serializers.cache = new LruObject(cacheSize)
+      }
       reply.serializer.serializerManager = SerializerManager.expand({
         serializers: request.routeOptions.config.serializers,
         cache: request.routeOptions.config.serializers.cache

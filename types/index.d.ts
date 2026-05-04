@@ -16,7 +16,8 @@ declare namespace fastifyAcceptsSerializer {
 
   export interface FastifyAcceptsSerializerPluginOptions {
     serializers: SerializerConfig[];
-    default: string;
+    default?: string;
+    cacheSize?: number;
   }
 
   export const fastifyAcceptsSerializer: FastifyAcceptsSerializer

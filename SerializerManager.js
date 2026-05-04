@@ -18,7 +18,7 @@ class SerializerManager {
   }
 
   findSerializer (types) {
-    const cacheValue = this.cache[types]
+    const cacheValue = this.cache.get(types)
 
     if (cacheValue) return cacheValue
 
@@ -28,7 +28,7 @@ class SerializerManager {
       for (let j = 0; j < this.serializers.length; j++) {
         const serializer = this.serializers[j]
         if (serializer.isAble(type)) {
-          this.cache[types] = { serializer, type }
+          this.cache.set(types, { serializer, type })
           return { serializer, type }
         }
       }
