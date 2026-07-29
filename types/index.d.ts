@@ -2,7 +2,7 @@ import { FastifyPluginCallback } from 'fastify'
 
 declare module 'fastify' {
   export interface FastifyContextConfig {
-    serializers: fastifyAcceptsSerializer.SerializerConfig[];
+    serializers?: fastifyAcceptsSerializer.SerializerConfig[];
   }
 }
 
