@@ -1,4 +1,4 @@
-import Fastify from 'fastify'
+import Fastify, { type RouteShorthandOptions } from 'fastify'
 import fastifyAcceptsSerializer from '..'
 import { expect } from 'tstyche'
 
@@ -38,3 +38,12 @@ fastify.get('/request', {
 }, function (_req, reply) {
   reply.send({ pippo: 'pluto' })
 })
+
+// Per-route serializers are optional (falls back to the global serializer)
+fastify.get('/no-route-serializers', {
+  config: {}
+}, function (_req, reply) {
+  reply.send({ pippo: 'pluto' })
+})
+
+expect<{ config: {} }>().type.toBeAssignableTo<RouteShorthandOptions>()
